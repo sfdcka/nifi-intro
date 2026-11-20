@@ -154,8 +154,8 @@
       "name" : "Output",
       "portFunction" : "STANDARD",
       "position" : {
-        "x" : 2472.0,
-        "y" : 1248.0
+        "x" : 2480.0,
+        "y" : 1328.0
       },
       "scheduledState" : "DISABLED",
       "type" : "OUTPUT_PORT"
@@ -639,6 +639,6 @@
   "snapshotMetadata" : {
     "author" : "admin",
     "flowIdentifier" : "CSV-to-JSON",
-    "timestamp" : 1795200379545
+    "timestamp" : 1795200489456
   }
 }
