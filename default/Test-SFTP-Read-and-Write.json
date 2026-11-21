@@ -1,4 +1,5 @@
 {
+  "externalControllerServices" : { },
   "flow" : {
     "createdTimestamp" : 1795220824906,
     "description" : "",
@@ -7,5 +8,1290 @@
     "name" : "Test SFTP Read and Write",
     "versionCount" : 0
   },
-  "latest" : false
+  "flowContents" : {
+    "comments" : "Converted from Boomi process 'Test SFTP' (68d9dce7-7678-47c8-a8ff-98f8576fd39f, v7): list /inbound, read each file, write a renamed copy to /outbound, log it.",
+    "componentType" : "PROCESS_GROUP",
+    "connections" : [ {
+      "backPressureDataSizeThreshold" : "1 GB",
+      "backPressureObjectThreshold" : 10000,
+      "bends" : [ ],
+      "componentType" : "CONNECTION",
+      "destination" : {
+        "comments" : "Boomi: Set Properties (DDP_FILE_NAME = List fileName) + SFTP Read by ID (operation 39047adb). Boomi Message '{1}' (current document) is a pass-through, so no processor. Completion Strategy: confirm the Boomi Read operation's post-read action.",
+        "groupId" : "flow-contents-group",
+        "id" : "3f1c2a10-7b5e-4c1a-9a51-0d3e5b7a2002",
+        "name" : "Fetch Inbound File",
+        "type" : "PROCESSOR"
+      },
+      "flowFileExpiration" : "0 sec",
+      "groupIdentifier" : "flow-contents-group",
+      "identifier" : "3f1c2a10-7b5e-4c1a-9a51-0d3e5b7a5001",
+      "labelIndex" : 1,
+      "loadBalanceCompression" : "DO_NOT_COMPRESS",
+      "loadBalanceStrategy" : "ROUND_ROBIN",
+      "name" : "",
+      "partitioningAttribute" : "",
+      "prioritizers" : [ ],
+      "selectedRelationships" : [ "success" ],
+      "source" : {
+        "comments" : "Boomi: Start + Set Properties (remoteDirectory=/inbound) + SFTP List (operation 6b6a05b0, fileName WILDCARD '*' -> regex '.*'). Primary Node + 1 task mirrors allowSimultaneous=false.",
+        "groupId" : "flow-contents-group",
+        "id" : "3f1c2a10-7b5e-4c1a-9a51-0d3e5b7a2001",
+        "name" : "List Inbound Files",
+        "type" : "PROCESSOR"
+      },
+      "zIndex" : 0
+    }, {
+      "backPressureDataSizeThreshold" : "1 GB",
+      "backPressureObjectThreshold" : 10000,
+      "bends" : [ ],
+      "componentType" : "CONNECTION",
+      "destination" : {
+        "comments" : "Boomi: Set Properties 'test .txt file' (SFTP - File Name = testfile_ + yyyyMMddHHmmssSSS + .txt). 8-char UUID suffix added so files handled in the same millisecond never collide. Original name kept in source.filename.",
+        "groupId" : "flow-contents-group",
+        "id" : "3f1c2a10-7b5e-4c1a-9a51-0d3e5b7a2003",
+        "name" : "Set Outbound File Name",
+        "type" : "PROCESSOR"
+      },
+      "flowFileExpiration" : "0 sec",
+      "groupIdentifier" : "flow-contents-group",
+      "identifier" : "3f1c2a10-7b5e-4c1a-9a51-0d3e5b7a5002",
+      "labelIndex" : 1,
+      "loadBalanceCompression" : "DO_NOT_COMPRESS",
+      "loadBalanceStrategy" : "DO_NOT_LOAD_BALANCE",
+      "name" : "",
+      "partitioningAttribute" : "",
+      "prioritizers" : [ ],
+      "selectedRelationships" : [ "success" ],
+      "source" : {
+        "comments" : "Boomi: Set Properties (DDP_FILE_NAME = List fileName) + SFTP Read by ID (operation 39047adb). Boomi Message '{1}' (current document) is a pass-through, so no processor. Completion Strategy: confirm the Boomi Read operation's post-read action.",
+        "groupId" : "flow-contents-group",
+        "id" : "3f1c2a10-7b5e-4c1a-9a51-0d3e5b7a2002",
+        "name" : "Fetch Inbound File",
+        "type" : "PROCESSOR"
+      },
+      "zIndex" : 0
+    }, {
+      "backPressureDataSizeThreshold" : "1 GB",
+      "backPressureObjectThreshold" : 10000,
+      "bends" : [ ],
+      "componentType" : "CONNECTION",
+      "destination" : {
+        "comments" : "Boomi: SFTP connector Write (operation d0b268c9) to /outbound. Dot Rename (default true) writes .name first, so ListSFTP never sees partial files.",
+        "groupId" : "flow-contents-group",
+        "id" : "3f1c2a10-7b5e-4c1a-9a51-0d3e5b7a2004",
+        "name" : "Write Outbound File",
+        "type" : "PROCESSOR"
+      },
+      "flowFileExpiration" : "0 sec",
+      "groupIdentifier" : "flow-contents-group",
+      "identifier" : "3f1c2a10-7b5e-4c1a-9a51-0d3e5b7a5003",
+      "labelIndex" : 1,
+      "loadBalanceCompression" : "DO_NOT_COMPRESS",
+      "loadBalanceStrategy" : "DO_NOT_LOAD_BALANCE",
+      "name" : "",
+      "partitioningAttribute" : "",
+      "prioritizers" : [ ],
+      "selectedRelationships" : [ "success" ],
+      "source" : {
+        "comments" : "Boomi: Set Properties 'test .txt file' (SFTP - File Name = testfile_ + yyyyMMddHHmmssSSS + .txt). 8-char UUID suffix added so files handled in the same millisecond never collide. Original name kept in source.filename.",
+        "groupId" : "flow-contents-group",
+        "id" : "3f1c2a10-7b5e-4c1a-9a51-0d3e5b7a2003",
+        "name" : "Set Outbound File Name",
+        "type" : "PROCESSOR"
+      },
+      "zIndex" : 0
+    }, {
+      "backPressureDataSizeThreshold" : "1 GB",
+      "backPressureObjectThreshold" : 10000,
+      "bends" : [ ],
+      "componentType" : "CONNECTION",
+      "destination" : {
+        "comments" : "Boomi: Notify 'File processed: {1}' (INFO) + Stop. success auto-terminated = Boomi Stop (continue=true).",
+        "groupId" : "flow-contents-group",
+        "id" : "3f1c2a10-7b5e-4c1a-9a51-0d3e5b7a2005",
+        "name" : "Log File Processed",
+        "type" : "PROCESSOR"
+      },
+      "flowFileExpiration" : "0 sec",
+      "groupIdentifier" : "flow-contents-group",
+      "identifier" : "3f1c2a10-7b5e-4c1a-9a51-0d3e5b7a5004",
+      "labelIndex" : 1,
+      "loadBalanceCompression" : "DO_NOT_COMPRESS",
+      "loadBalanceStrategy" : "DO_NOT_LOAD_BALANCE",
+      "name" : "",
+      "partitioningAttribute" : "",
+      "prioritizers" : [ ],
+      "selectedRelationships" : [ "success" ],
+      "source" : {
+        "comments" : "Boomi: SFTP connector Write (operation d0b268c9) to /outbound. Dot Rename (default true) writes .name first, so ListSFTP never sees partial files.",
+        "groupId" : "flow-contents-group",
+        "id" : "3f1c2a10-7b5e-4c1a-9a51-0d3e5b7a2004",
+        "name" : "Write Outbound File",
+        "type" : "PROCESSOR"
+      },
+      "zIndex" : 0
+    }, {
+      "backPressureDataSizeThreshold" : "1 GB",
+      "backPressureObjectThreshold" : 10000,
+      "bends" : [ ],
+      "componentType" : "CONNECTION",
+      "destination" : {
+        "comments" : "",
+        "groupId" : "flow-contents-group",
+        "id" : "3f1c2a10-7b5e-4c1a-9a51-0d3e5b7a3001",
+        "name" : "Funnel",
+        "type" : "FUNNEL"
+      },
+      "flowFileExpiration" : "0 sec",
+      "groupIdentifier" : "flow-contents-group",
+      "identifier" : "3f1c2a10-7b5e-4c1a-9a51-0d3e5b7a5005",
+      "labelIndex" : 1,
+      "loadBalanceCompression" : "DO_NOT_COMPRESS",
+      "loadBalanceStrategy" : "DO_NOT_LOAD_BALANCE",
+      "name" : "read failures",
+      "partitioningAttribute" : "",
+      "prioritizers" : [ ],
+      "selectedRelationships" : [ "comms.failure", "not.found", "permission.denied" ],
+      "source" : {
+        "comments" : "Boomi: Set Properties (DDP_FILE_NAME = List fileName) + SFTP Read by ID (operation 39047adb). Boomi Message '{1}' (current document) is a pass-through, so no processor. Completion Strategy: confirm the Boomi Read operation's post-read action.",
+        "groupId" : "flow-contents-group",
+        "id" : "3f1c2a10-7b5e-4c1a-9a51-0d3e5b7a2002",
+        "name" : "Fetch Inbound File",
+        "type" : "PROCESSOR"
+      },
+      "zIndex" : 0
+    }, {
+      "backPressureDataSizeThreshold" : "1 GB",
+      "backPressureObjectThreshold" : 10000,
+      "bends" : [ ],
+      "componentType" : "CONNECTION",
+      "destination" : {
+        "comments" : "",
+        "groupId" : "flow-contents-group",
+        "id" : "3f1c2a10-7b5e-4c1a-9a51-0d3e5b7a3001",
+        "name" : "Funnel",
+        "type" : "FUNNEL"
+      },
+      "flowFileExpiration" : "0 sec",
+      "groupIdentifier" : "flow-contents-group",
+      "identifier" : "3f1c2a10-7b5e-4c1a-9a51-0d3e5b7a5006",
+      "labelIndex" : 1,
+      "loadBalanceCompression" : "DO_NOT_COMPRESS",
+      "loadBalanceStrategy" : "DO_NOT_LOAD_BALANCE",
+      "name" : "write failures",
+      "partitioningAttribute" : "",
+      "prioritizers" : [ ],
+      "selectedRelationships" : [ "failure", "reject" ],
+      "source" : {
+        "comments" : "Boomi: SFTP connector Write (operation d0b268c9) to /outbound. Dot Rename (default true) writes .name first, so ListSFTP never sees partial files.",
+        "groupId" : "flow-contents-group",
+        "id" : "3f1c2a10-7b5e-4c1a-9a51-0d3e5b7a2004",
+        "name" : "Write Outbound File",
+        "type" : "PROCESSOR"
+      },
+      "zIndex" : 0
+    } ],
+    "controllerServices" : [ ],
+    "defaultBackPressureDataSizeThreshold" : "1 GB",
+    "defaultBackPressureObjectThreshold" : 10000,
+    "defaultFlowFileExpiration" : "0 sec",
+    "executionEngine" : "INHERITED",
+    "externalControllerServiceReferences" : { },
+    "flowFileConcurrency" : "UNBOUNDED",
+    "flowFileOutboundPolicy" : "STREAM_WHEN_AVAILABLE",
+    "funnels" : [ {
+      "componentType" : "FUNNEL",
+      "groupIdentifier" : "flow-contents-group",
+      "identifier" : "3f1c2a10-7b5e-4c1a-9a51-0d3e5b7a3001",
+      "position" : {
+        "x" : 672.0,
+        "y" : 432.0
+      }
+    } ],
+    "identifier" : "flow-contents-group",
+    "inputPorts" : [ ],
+    "labels" : [ {
+      "componentType" : "LABEL",
+      "groupIdentifier" : "flow-contents-group",
+      "height" : 40.0,
+      "identifier" : "3f1c2a10-7b5e-4c1a-9a51-0d3e5b7a4001",
+      "label" : "SFTP failures - inspect queue, fix, then replay or empty",
+      "position" : {
+        "x" : 460.0,
+        "y" : 380.0
+      },
+      "style" : { },
+      "width" : 260.0,
+      "zIndex" : 0
+    } ],
+    "maxConcurrentTasks" : 1,
+    "name" : "Test_SFTP_flow_definition",
+    "outputPorts" : [ ],
+    "parameterContextName" : "Test SFTP Parameters",
+    "position" : {
+      "x" : 0.0,
+      "y" : 0.0
+    },
+    "processGroups" : [ ],
+    "processors" : [ {
+      "autoTerminatedRelationships" : [ ],
+      "backoffMechanism" : "PENALIZE_FLOWFILE",
+      "bulletinLevel" : "WARN",
+      "bundle" : {
+        "artifact" : "nifi-standard-nar",
+        "group" : "org.apache.nifi",
+        "version" : "2.12.0"
+      },
+      "comments" : "Boomi: Start + Set Properties (remoteDirectory=/inbound) + SFTP List (operation 6b6a05b0, fileName WILDCARD '*' -> regex '.*'). Primary Node + 1 task mirrors allowSimultaneous=false.",
+      "componentType" : "PROCESSOR",
+      "concurrentlySchedulableTaskCount" : 1,
+      "executionNode" : "PRIMARY",
+      "groupIdentifier" : "flow-contents-group",
+      "identifier" : "3f1c2a10-7b5e-4c1a-9a51-0d3e5b7a2001",
+      "maxBackoffPeriod" : "10 mins",
+      "name" : "List Inbound Files",
+      "penaltyDuration" : "30 sec",
+      "position" : {
+        "x" : 0.0,
+        "y" : 0.0
+      },
+      "properties" : {
+        "Minimum File Age" : "#{sftp.minimum.file.age}",
+        "Entity Tracking Initial Listing Target" : "all",
+        "Ignore Dotted Files" : "true",
+        "Port" : "#{sftp.port}",
+        "Connection Timeout" : "30 sec",
+        "Follow Symbolic Links" : "false",
+        "Minimum File Size" : "0 B",
+        "Search Recursively" : "false",
+        "Entity Tracking Time Window" : "3 hours",
+        "Strict Host Key Checking" : "#{sftp.strict.host.key.checking}",
+        "Password" : "#{sftp.password}",
+        "File Filter Regex" : "#{sftp.file.filter.regex}",
+        "Hostname" : "#{sftp.hostname}",
+        "Remote Path" : "#{sftp.remote.input.path}",
+        "Host Key File" : "#{sftp.known.hosts.path}",
+        "Use Compression" : "false",
+        "Send Keep Alive On Timeout" : "true",
+        "Data Timeout" : "30 sec",
+        "Target System Timestamp Precision" : "auto-detect",
+        "Username" : "#{sftp.username}",
+        "Algorithm Negotiation" : "DEFAULT",
+        "Listing Strategy" : "timestamps"
+      },
+      "propertyDescriptors" : {
+        "Minimum File Age" : {
+          "displayName" : "Minimum File Age",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Minimum File Age",
+          "sensitive" : false
+        },
+        "Entity Tracking Initial Listing Target" : {
+          "displayName" : "Entity Tracking Initial Listing Target",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Entity Tracking Initial Listing Target",
+          "sensitive" : false
+        },
+        "Ignore Dotted Files" : {
+          "displayName" : "Ignore Dotted Files",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Ignore Dotted Files",
+          "sensitive" : false
+        },
+        "Entity Tracking State Cache" : {
+          "displayName" : "Entity Tracking State Cache",
+          "dynamic" : false,
+          "identifiesControllerService" : true,
+          "name" : "Entity Tracking State Cache",
+          "sensitive" : false
+        },
+        "Port" : {
+          "displayName" : "Port",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Port",
+          "sensitive" : false
+        },
+        "Ciphers Allowed" : {
+          "displayName" : "Ciphers Allowed",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Ciphers Allowed",
+          "sensitive" : false
+        },
+        "Private Key Passphrase" : {
+          "displayName" : "Private Key Passphrase",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Private Key Passphrase",
+          "sensitive" : true
+        },
+        "Proxy Configuration Service" : {
+          "displayName" : "Proxy Configuration Service",
+          "dynamic" : false,
+          "identifiesControllerService" : true,
+          "name" : "Proxy Configuration Service",
+          "sensitive" : false
+        },
+        "Connection Timeout" : {
+          "displayName" : "Connection Timeout",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Connection Timeout",
+          "sensitive" : false
+        },
+        "Follow Symbolic Links" : {
+          "displayName" : "Follow Symbolic Links",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Follow Symbolic Links",
+          "sensitive" : false
+        },
+        "Path Filter Regex" : {
+          "displayName" : "Path Filter Regex",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Path Filter Regex",
+          "sensitive" : false
+        },
+        "Record Writer" : {
+          "displayName" : "Record Writer",
+          "dynamic" : false,
+          "identifiesControllerService" : true,
+          "name" : "Record Writer",
+          "sensitive" : false
+        },
+        "Minimum File Size" : {
+          "displayName" : "Minimum File Size",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Minimum File Size",
+          "sensitive" : false
+        },
+        "Search Recursively" : {
+          "displayName" : "Search Recursively",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Search Recursively",
+          "sensitive" : false
+        },
+        "Entity Tracking Time Window" : {
+          "displayName" : "Entity Tracking Time Window",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Entity Tracking Time Window",
+          "sensitive" : false
+        },
+        "Strict Host Key Checking" : {
+          "displayName" : "Strict Host Key Checking",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Strict Host Key Checking",
+          "sensitive" : false
+        },
+        "Password" : {
+          "displayName" : "Password",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Password",
+          "sensitive" : true
+        },
+        "File Filter Regex" : {
+          "displayName" : "File Filter Regex",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "File Filter Regex",
+          "sensitive" : false
+        },
+        "Maximum File Age" : {
+          "displayName" : "Maximum File Age",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Maximum File Age",
+          "sensitive" : false
+        },
+        "Hostname" : {
+          "displayName" : "Hostname",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Hostname",
+          "sensitive" : false
+        },
+        "Maximum File Size" : {
+          "displayName" : "Maximum File Size",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Maximum File Size",
+          "sensitive" : false
+        },
+        "Remote Path" : {
+          "displayName" : "Remote Path",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Remote Path",
+          "sensitive" : false
+        },
+        "Host Key File" : {
+          "displayName" : "Host Key File",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Host Key File",
+          "resourceDefinition" : {
+            "cardinality" : "SINGLE",
+            "resourceTypes" : [ "FILE" ]
+          },
+          "sensitive" : false
+        },
+        "Use Compression" : {
+          "displayName" : "Use Compression",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Use Compression",
+          "sensitive" : false
+        },
+        "Message Authentication Codes Allowed" : {
+          "displayName" : "Message Authentication Codes Allowed",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Message Authentication Codes Allowed",
+          "sensitive" : false
+        },
+        "Send Keep Alive On Timeout" : {
+          "displayName" : "Send Keep Alive On Timeout",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Send Keep Alive On Timeout",
+          "sensitive" : false
+        },
+        "Data Timeout" : {
+          "displayName" : "Data Timeout",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Data Timeout",
+          "sensitive" : false
+        },
+        "Private Key Path" : {
+          "displayName" : "Private Key Path",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Private Key Path",
+          "resourceDefinition" : {
+            "cardinality" : "SINGLE",
+            "resourceTypes" : [ "FILE" ]
+          },
+          "sensitive" : false
+        },
+        "Target System Timestamp Precision" : {
+          "displayName" : "Target System Timestamp Precision",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Target System Timestamp Precision",
+          "sensitive" : false
+        },
+        "Username" : {
+          "displayName" : "Username",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Username",
+          "sensitive" : false
+        },
+        "Algorithm Negotiation" : {
+          "displayName" : "Algorithm Negotiation",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Algorithm Negotiation",
+          "sensitive" : false
+        },
+        "Key Exchange Algorithms Allowed" : {
+          "displayName" : "Key Exchange Algorithms Allowed",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Key Exchange Algorithms Allowed",
+          "sensitive" : false
+        },
+        "Listing Strategy" : {
+          "displayName" : "Listing Strategy",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Listing Strategy",
+          "sensitive" : false
+        },
+        "Key Algorithms Allowed" : {
+          "displayName" : "Key Algorithms Allowed",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Key Algorithms Allowed",
+          "sensitive" : false
+        }
+      },
+      "retriedRelationships" : [ ],
+      "retryCount" : 10,
+      "runDurationMillis" : 0,
+      "scheduledState" : "ENABLED",
+      "schedulingPeriod" : "1 min",
+      "schedulingStrategy" : "TIMER_DRIVEN",
+      "style" : { },
+      "type" : "org.apache.nifi.processors.standard.ListSFTP",
+      "yieldDuration" : "1 sec"
+    }, {
+      "autoTerminatedRelationships" : [ ],
+      "backoffMechanism" : "PENALIZE_FLOWFILE",
+      "bulletinLevel" : "WARN",
+      "bundle" : {
+        "artifact" : "nifi-standard-nar",
+        "group" : "org.apache.nifi",
+        "version" : "2.12.0"
+      },
+      "comments" : "Boomi: Set Properties (DDP_FILE_NAME = List fileName) + SFTP Read by ID (operation 39047adb). Boomi Message '{1}' (current document) is a pass-through, so no processor. Completion Strategy: confirm the Boomi Read operation's post-read action.",
+      "componentType" : "PROCESSOR",
+      "concurrentlySchedulableTaskCount" : 1,
+      "executionNode" : "ALL",
+      "groupIdentifier" : "flow-contents-group",
+      "identifier" : "3f1c2a10-7b5e-4c1a-9a51-0d3e5b7a2002",
+      "maxBackoffPeriod" : "10 mins",
+      "name" : "Fetch Inbound File",
+      "penaltyDuration" : "30 sec",
+      "position" : {
+        "x" : 0.0,
+        "y" : 220.0
+      },
+      "properties" : {
+        "Port" : "#{sftp.port}",
+        "Remote File" : "${path}/${filename}",
+        "Log Level When File Not Found" : "ERROR",
+        "Hostname" : "#{sftp.hostname}",
+        "Move Conflict Resolution" : "FAIL",
+        "Create Directory" : "true",
+        "Host Key File" : "#{sftp.known.hosts.path}",
+        "Use Compression" : "false",
+        "Disable Directory Listing" : "false",
+        "Send Keep Alive On Timeout" : "true",
+        "Completion Strategy" : "#{sftp.completion.strategy}",
+        "Connection Timeout" : "30 sec",
+        "Data Timeout" : "30 sec",
+        "Username" : "#{sftp.username}",
+        "Move Destination Directory" : "#{sftp.archive.path}",
+        "Algorithm Negotiation" : "DEFAULT",
+        "Strict Host Key Checking" : "#{sftp.strict.host.key.checking}",
+        "Password" : "#{sftp.password}"
+      },
+      "propertyDescriptors" : {
+        "Port" : {
+          "displayName" : "Port",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Port",
+          "sensitive" : false
+        },
+        "Remote File" : {
+          "displayName" : "Remote File",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Remote File",
+          "sensitive" : false
+        },
+        "Log Level When File Not Found" : {
+          "displayName" : "Log Level When File Not Found",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Log Level When File Not Found",
+          "sensitive" : false
+        },
+        "Create Directory" : {
+          "displayName" : "Create Directory",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Create Directory",
+          "sensitive" : false
+        },
+        "Ciphers Allowed" : {
+          "displayName" : "Ciphers Allowed",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Ciphers Allowed",
+          "sensitive" : false
+        },
+        "Disable Directory Listing" : {
+          "displayName" : "Disable Directory Listing",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Disable Directory Listing",
+          "sensitive" : false
+        },
+        "Completion Strategy" : {
+          "displayName" : "Completion Strategy",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Completion Strategy",
+          "sensitive" : false
+        },
+        "Private Key Passphrase" : {
+          "displayName" : "Private Key Passphrase",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Private Key Passphrase",
+          "sensitive" : true
+        },
+        "Proxy Configuration Service" : {
+          "displayName" : "Proxy Configuration Service",
+          "dynamic" : false,
+          "identifiesControllerService" : true,
+          "name" : "Proxy Configuration Service",
+          "sensitive" : false
+        },
+        "Connection Timeout" : {
+          "displayName" : "Connection Timeout",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Connection Timeout",
+          "sensitive" : false
+        },
+        "Move Destination Directory" : {
+          "displayName" : "Move Destination Directory",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Move Destination Directory",
+          "sensitive" : false
+        },
+        "Strict Host Key Checking" : {
+          "displayName" : "Strict Host Key Checking",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Strict Host Key Checking",
+          "sensitive" : false
+        },
+        "Password" : {
+          "displayName" : "Password",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Password",
+          "sensitive" : true
+        },
+        "Hostname" : {
+          "displayName" : "Hostname",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Hostname",
+          "sensitive" : false
+        },
+        "Move Conflict Resolution" : {
+          "displayName" : "Move Conflict Resolution",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Move Conflict Resolution",
+          "sensitive" : false
+        },
+        "Host Key File" : {
+          "displayName" : "Host Key File",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Host Key File",
+          "resourceDefinition" : {
+            "cardinality" : "SINGLE",
+            "resourceTypes" : [ "FILE" ]
+          },
+          "sensitive" : false
+        },
+        "Use Compression" : {
+          "displayName" : "Use Compression",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Use Compression",
+          "sensitive" : false
+        },
+        "Message Authentication Codes Allowed" : {
+          "displayName" : "Message Authentication Codes Allowed",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Message Authentication Codes Allowed",
+          "sensitive" : false
+        },
+        "Send Keep Alive On Timeout" : {
+          "displayName" : "Send Keep Alive On Timeout",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Send Keep Alive On Timeout",
+          "sensitive" : false
+        },
+        "Data Timeout" : {
+          "displayName" : "Data Timeout",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Data Timeout",
+          "sensitive" : false
+        },
+        "Private Key Path" : {
+          "displayName" : "Private Key Path",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Private Key Path",
+          "resourceDefinition" : {
+            "cardinality" : "SINGLE",
+            "resourceTypes" : [ "FILE" ]
+          },
+          "sensitive" : false
+        },
+        "Username" : {
+          "displayName" : "Username",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Username",
+          "sensitive" : false
+        },
+        "Algorithm Negotiation" : {
+          "displayName" : "Algorithm Negotiation",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Algorithm Negotiation",
+          "sensitive" : false
+        },
+        "Key Exchange Algorithms Allowed" : {
+          "displayName" : "Key Exchange Algorithms Allowed",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Key Exchange Algorithms Allowed",
+          "sensitive" : false
+        },
+        "Key Algorithms Allowed" : {
+          "displayName" : "Key Algorithms Allowed",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Key Algorithms Allowed",
+          "sensitive" : false
+        }
+      },
+      "retriedRelationships" : [ "comms.failure" ],
+      "retryCount" : 3,
+      "runDurationMillis" : 0,
+      "scheduledState" : "ENABLED",
+      "schedulingPeriod" : "0 sec",
+      "schedulingStrategy" : "TIMER_DRIVEN",
+      "style" : { },
+      "type" : "org.apache.nifi.processors.standard.FetchSFTP",
+      "yieldDuration" : "1 sec"
+    }, {
+      "autoTerminatedRelationships" : [ ],
+      "backoffMechanism" : "PENALIZE_FLOWFILE",
+      "bulletinLevel" : "WARN",
+      "bundle" : {
+        "artifact" : "nifi-update-attribute-nar",
+        "group" : "org.apache.nifi",
+        "version" : "2.12.0"
+      },
+      "comments" : "Boomi: Set Properties 'test .txt file' (SFTP - File Name = testfile_ + yyyyMMddHHmmssSSS + .txt). 8-char UUID suffix added so files handled in the same millisecond never collide. Original name kept in source.filename.",
+      "componentType" : "PROCESSOR",
+      "concurrentlySchedulableTaskCount" : 1,
+      "executionNode" : "ALL",
+      "groupIdentifier" : "flow-contents-group",
+      "identifier" : "3f1c2a10-7b5e-4c1a-9a51-0d3e5b7a2003",
+      "maxBackoffPeriod" : "10 mins",
+      "name" : "Set Outbound File Name",
+      "penaltyDuration" : "30 sec",
+      "position" : {
+        "x" : 0.0,
+        "y" : 440.0
+      },
+      "properties" : {
+        "filename" : "#{file.name.prefix}${now():format('yyyyMMddHHmmssSSS')}_${UUID():substring(0,8)}#{file.name.extension}",
+        "Store State" : "Do not store state",
+        "source.filename" : "${filename}",
+        "Cache Value Lookup Cache Size" : "100"
+      },
+      "propertyDescriptors" : {
+        "Delete Attributes Expression" : {
+          "displayName" : "Delete Attributes Expression",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Delete Attributes Expression",
+          "sensitive" : false
+        },
+        "filename" : {
+          "displayName" : "filename",
+          "dynamic" : true,
+          "identifiesControllerService" : false,
+          "name" : "filename",
+          "sensitive" : false
+        },
+        "Store State" : {
+          "displayName" : "Store State",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Store State",
+          "sensitive" : false
+        },
+        "source.filename" : {
+          "displayName" : "source.filename",
+          "dynamic" : true,
+          "identifiesControllerService" : false,
+          "name" : "source.filename",
+          "sensitive" : false
+        },
+        "Cache Value Lookup Cache Size" : {
+          "displayName" : "Cache Value Lookup Cache Size",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Cache Value Lookup Cache Size",
+          "sensitive" : false
+        },
+        "Stateful Variables Initial Value" : {
+          "displayName" : "Stateful Variables Initial Value",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Stateful Variables Initial Value",
+          "sensitive" : false
+        }
+      },
+      "retriedRelationships" : [ ],
+      "retryCount" : 10,
+      "runDurationMillis" : 0,
+      "scheduledState" : "ENABLED",
+      "schedulingPeriod" : "0 sec",
+      "schedulingStrategy" : "TIMER_DRIVEN",
+      "style" : { },
+      "type" : "org.apache.nifi.processors.attributes.UpdateAttribute",
+      "yieldDuration" : "1 sec"
+    }, {
+      "autoTerminatedRelationships" : [ ],
+      "backoffMechanism" : "PENALIZE_FLOWFILE",
+      "bulletinLevel" : "WARN",
+      "bundle" : {
+        "artifact" : "nifi-standard-nar",
+        "group" : "org.apache.nifi",
+        "version" : "2.12.0"
+      },
+      "comments" : "Boomi: SFTP connector Write (operation d0b268c9) to /outbound. Dot Rename (default true) writes .name first, so ListSFTP never sees partial files.",
+      "componentType" : "PROCESSOR",
+      "concurrentlySchedulableTaskCount" : 1,
+      "executionNode" : "ALL",
+      "groupIdentifier" : "flow-contents-group",
+      "identifier" : "3f1c2a10-7b5e-4c1a-9a51-0d3e5b7a2004",
+      "maxBackoffPeriod" : "10 mins",
+      "name" : "Write Outbound File",
+      "penaltyDuration" : "30 sec",
+      "position" : {
+        "x" : 0.0,
+        "y" : 660.0
+      },
+      "properties" : {
+        "Port" : "#{sftp.port}",
+        "Create Directory" : "false",
+        "Conflict Resolution" : "REJECT",
+        "Disable Directory Listing" : "false",
+        "Connection Timeout" : "30 sec",
+        "Dot Rename" : "true",
+        "Strict Host Key Checking" : "#{sftp.strict.host.key.checking}",
+        "Password" : "#{sftp.password}",
+        "Hostname" : "#{sftp.hostname}",
+        "Reject Zero-Byte Files" : "true",
+        "Remote Path" : "#{sftp.remote.output.path}",
+        "Host Key File" : "#{sftp.known.hosts.path}",
+        "Use Compression" : "false",
+        "Send Keep Alive On Timeout" : "true",
+        "Data Timeout" : "30 sec",
+        "Username" : "#{sftp.username}",
+        "Batch Size" : "500",
+        "Algorithm Negotiation" : "DEFAULT"
+      },
+      "propertyDescriptors" : {
+        "Remote Owner" : {
+          "displayName" : "Remote Owner",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Remote Owner",
+          "sensitive" : false
+        },
+        "Port" : {
+          "displayName" : "Port",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Port",
+          "sensitive" : false
+        },
+        "Create Directory" : {
+          "displayName" : "Create Directory",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Create Directory",
+          "sensitive" : false
+        },
+        "Conflict Resolution" : {
+          "displayName" : "Conflict Resolution",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Conflict Resolution",
+          "sensitive" : false
+        },
+        "Ciphers Allowed" : {
+          "displayName" : "Ciphers Allowed",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Ciphers Allowed",
+          "sensitive" : false
+        },
+        "Disable Directory Listing" : {
+          "displayName" : "Disable Directory Listing",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Disable Directory Listing",
+          "sensitive" : false
+        },
+        "Temporary Filename" : {
+          "displayName" : "Temporary Filename",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Temporary Filename",
+          "sensitive" : false
+        },
+        "Remote Group" : {
+          "displayName" : "Remote Group",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Remote Group",
+          "sensitive" : false
+        },
+        "Private Key Passphrase" : {
+          "displayName" : "Private Key Passphrase",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Private Key Passphrase",
+          "sensitive" : true
+        },
+        "Proxy Configuration Service" : {
+          "displayName" : "Proxy Configuration Service",
+          "dynamic" : false,
+          "identifiesControllerService" : true,
+          "name" : "Proxy Configuration Service",
+          "sensitive" : false
+        },
+        "Connection Timeout" : {
+          "displayName" : "Connection Timeout",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Connection Timeout",
+          "sensitive" : false
+        },
+        "Permissions" : {
+          "displayName" : "Permissions",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Permissions",
+          "sensitive" : false
+        },
+        "Dot Rename" : {
+          "displayName" : "Dot Rename",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Dot Rename",
+          "sensitive" : false
+        },
+        "Last Modified Time" : {
+          "displayName" : "Last Modified Time",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Last Modified Time",
+          "sensitive" : false
+        },
+        "Strict Host Key Checking" : {
+          "displayName" : "Strict Host Key Checking",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Strict Host Key Checking",
+          "sensitive" : false
+        },
+        "Password" : {
+          "displayName" : "Password",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Password",
+          "sensitive" : true
+        },
+        "Hostname" : {
+          "displayName" : "Hostname",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Hostname",
+          "sensitive" : false
+        },
+        "Reject Zero-Byte Files" : {
+          "displayName" : "Reject Zero-Byte Files",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Reject Zero-Byte Files",
+          "sensitive" : false
+        },
+        "Remote Path" : {
+          "displayName" : "Remote Path",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Remote Path",
+          "sensitive" : false
+        },
+        "Host Key File" : {
+          "displayName" : "Host Key File",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Host Key File",
+          "resourceDefinition" : {
+            "cardinality" : "SINGLE",
+            "resourceTypes" : [ "FILE" ]
+          },
+          "sensitive" : false
+        },
+        "Use Compression" : {
+          "displayName" : "Use Compression",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Use Compression",
+          "sensitive" : false
+        },
+        "Message Authentication Codes Allowed" : {
+          "displayName" : "Message Authentication Codes Allowed",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Message Authentication Codes Allowed",
+          "sensitive" : false
+        },
+        "Send Keep Alive On Timeout" : {
+          "displayName" : "Send Keep Alive On Timeout",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Send Keep Alive On Timeout",
+          "sensitive" : false
+        },
+        "Data Timeout" : {
+          "displayName" : "Data Timeout",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Data Timeout",
+          "sensitive" : false
+        },
+        "Private Key Path" : {
+          "displayName" : "Private Key Path",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Private Key Path",
+          "resourceDefinition" : {
+            "cardinality" : "SINGLE",
+            "resourceTypes" : [ "FILE" ]
+          },
+          "sensitive" : false
+        },
+        "Username" : {
+          "displayName" : "Username",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Username",
+          "sensitive" : false
+        },
+        "Batch Size" : {
+          "displayName" : "Batch Size",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Batch Size",
+          "sensitive" : false
+        },
+        "Algorithm Negotiation" : {
+          "displayName" : "Algorithm Negotiation",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Algorithm Negotiation",
+          "sensitive" : false
+        },
+        "Key Exchange Algorithms Allowed" : {
+          "displayName" : "Key Exchange Algorithms Allowed",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Key Exchange Algorithms Allowed",
+          "sensitive" : false
+        },
+        "Key Algorithms Allowed" : {
+          "displayName" : "Key Algorithms Allowed",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Key Algorithms Allowed",
+          "sensitive" : false
+        }
+      },
+      "retriedRelationships" : [ "failure" ],
+      "retryCount" : 3,
+      "runDurationMillis" : 0,
+      "scheduledState" : "ENABLED",
+      "schedulingPeriod" : "0 sec",
+      "schedulingStrategy" : "TIMER_DRIVEN",
+      "style" : { },
+      "type" : "org.apache.nifi.processors.standard.PutSFTP",
+      "yieldDuration" : "1 sec"
+    }, {
+      "autoTerminatedRelationships" : [ "success" ],
+      "backoffMechanism" : "PENALIZE_FLOWFILE",
+      "bulletinLevel" : "WARN",
+      "bundle" : {
+        "artifact" : "nifi-standard-nar",
+        "group" : "org.apache.nifi",
+        "version" : "2.12.0"
+      },
+      "comments" : "Boomi: Notify 'File processed: {1}' (INFO) + Stop. success auto-terminated = Boomi Stop (continue=true).",
+      "componentType" : "PROCESSOR",
+      "concurrentlySchedulableTaskCount" : 1,
+      "executionNode" : "ALL",
+      "groupIdentifier" : "flow-contents-group",
+      "identifier" : "3f1c2a10-7b5e-4c1a-9a51-0d3e5b7a2005",
+      "maxBackoffPeriod" : "10 mins",
+      "name" : "Log File Processed",
+      "penaltyDuration" : "30 sec",
+      "position" : {
+        "x" : 0.0,
+        "y" : 880.0
+      },
+      "properties" : {
+        "Log Message" : "File processed: ${filename} (source ${path}/${source.filename})",
+        "Log Level" : "info"
+      },
+      "propertyDescriptors" : {
+        "Log Message" : {
+          "displayName" : "Log Message",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Log Message",
+          "sensitive" : false
+        },
+        "Log Level" : {
+          "displayName" : "Log Level",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Log Level",
+          "sensitive" : false
+        },
+        "Log Prefix" : {
+          "displayName" : "Log Prefix",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Log Prefix",
+          "sensitive" : false
+        }
+      },
+      "retriedRelationships" : [ ],
+      "retryCount" : 10,
+      "runDurationMillis" : 0,
+      "scheduledState" : "ENABLED",
+      "schedulingPeriod" : "0 sec",
+      "schedulingStrategy" : "TIMER_DRIVEN",
+      "style" : { },
+      "type" : "org.apache.nifi.processors.standard.LogMessage",
+      "yieldDuration" : "1 sec"
+    } ],
+    "remoteProcessGroups" : [ ],
+    "scheduledState" : "ENABLED",
+    "statelessFlowTimeout" : "1 min"
+  },
+  "flowEncodingVersion" : "1.0",
+  "latest" : false,
+  "parameterContexts" : {
+    "Test SFTP Parameters" : {
+      "componentType" : "PARAMETER_CONTEXT",
+      "description" : "Converted from Boomi process 'Test SFTP' v7. Fill in CHANGE_ME values and sftp.password after upload.",
+      "inheritedParameterContexts" : [ ],
+      "name" : "Test SFTP Parameters",
+      "parameters" : [ {
+        "description" : "Boomi static file name part 3",
+        "name" : "file.name.extension",
+        "provided" : false,
+        "sensitive" : false,
+        "value" : ".txt"
+      }, {
+        "description" : "Boomi static file name part 1",
+        "name" : "file.name.prefix",
+        "provided" : false,
+        "sensitive" : false,
+        "value" : "testfile_"
+      }, {
+        "description" : "Boomi date mask (current date)",
+        "name" : "file.name.timestamp.mask",
+        "provided" : false,
+        "sensitive" : false,
+        "value" : "yyyyMMddHHmmssSSS"
+      }, {
+        "description" : "Move Destination Directory - used only when completion strategy = Move File",
+        "name" : "sftp.archive.path",
+        "provided" : false,
+        "sensitive" : false,
+        "value" : "/inbound/archive"
+      }, {
+        "description" : "FetchSFTP Completion Strategy: exactly None | Delete File | Move File (confirm Boomi Read operation 39047adb post-read action)",
+        "name" : "sftp.completion.strategy",
+        "provided" : false,
+        "sensitive" : false,
+        "value" : "None"
+      }, {
+        "description" : "Java regex for ListSFTP (Boomi List wildcard '*' -> '.*')",
+        "name" : "sftp.file.filter.regex",
+        "provided" : false,
+        "sensitive" : false,
+        "value" : ".*"
+      }, {
+        "description" : "SFTP host as seen from INSIDE the NiFi container (host.docker.internal for your Mac, container name on a shared Docker network)",
+        "name" : "sftp.hostname",
+        "provided" : false,
+        "sensitive" : false,
+        "value" : "eu-central-1.sftpcloud.io"
+      }, {
+        "description" : "known_hosts file that must exist at this path on EVERY NiFi node",
+        "name" : "sftp.known.hosts.path",
+        "provided" : false,
+        "sensitive" : false,
+        "value" : "/opt/nifi/nifi-current/conf/sftp/known_hosts"
+      }, {
+        "description" : "ListSFTP Minimum File Age - raise (e.g. 30 sec) if senders write slowly",
+        "name" : "sftp.minimum.file.age",
+        "provided" : false,
+        "sensitive" : false,
+        "value" : "0 sec"
+      }, {
+        "description" : "SFTP password - set after upload (sensitive values are never stored in flow definitions)",
+        "name" : "sftp.password",
+        "provided" : false,
+        "sensitive" : true
+      }, {
+        "description" : "SFTP port",
+        "name" : "sftp.port",
+        "provided" : false,
+        "sensitive" : false,
+        "value" : "22"
+      }, {
+        "description" : "ListSFTP directory (Boomi remoteDirectory before List/Read)",
+        "name" : "sftp.remote.input.path",
+        "provided" : false,
+        "sensitive" : false,
+        "value" : "/inbound"
+      }, {
+        "description" : "PutSFTP target directory (Boomi remoteDirectory before Write)",
+        "name" : "sftp.remote.output.path",
+        "provided" : false,
+        "sensitive" : false,
+        "value" : "/outbound"
+      }, {
+        "description" : "true|false - keep true outside local testing",
+        "name" : "sftp.strict.host.key.checking",
+        "provided" : false,
+        "sensitive" : false,
+        "value" : "true"
+      }, {
+        "description" : "SFTP login user",
+        "name" : "sftp.username",
+        "provided" : false,
+        "sensitive" : false,
+        "value" : "be5dc5dcb4e44eaabbdcbd6784f0274c"
+      } ]
+    }
+  },
+  "parameterProviders" : { },
+  "snapshotMetadata" : {
+    "author" : "admin",
+    "flowIdentifier" : "Test-SFTP-Read-and-Write",
+    "timestamp" : 1795220826479
+  }
 }
