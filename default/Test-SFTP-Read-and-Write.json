@@ -1,0 +1,11 @@
+{
+  "flow" : {
+    "createdTimestamp" : 1795220824906,
+    "description" : "",
+    "identifier" : "Test-SFTP-Read-and-Write",
+    "lastModifiedTimestamp" : 1795220824906,
+    "name" : "Test SFTP Read and Write",
+    "versionCount" : 0
+  },
+  "latest" : false
+}
