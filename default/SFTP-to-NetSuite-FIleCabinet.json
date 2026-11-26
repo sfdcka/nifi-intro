@@ -1,0 +1,11 @@
+{
+  "flow" : {
+    "createdTimestamp" : 1795656799676,
+    "description" : "SFTP to NetSuite FIleCabinet",
+    "identifier" : "SFTP-to-NetSuite-FIleCabinet",
+    "lastModifiedTimestamp" : 1795656799676,
+    "name" : "SFTP to NetSuite FIleCabinet",
+    "versionCount" : 0
+  },
+  "latest" : false
+}
