@@ -1,0 +1,11 @@
+{
+  "flow" : {
+    "createdTimestamp" : 1795656823006,
+    "description" : "NetSuite FIleCabinet to Box Folder",
+    "identifier" : "NetSuite-FIleCabinet-to-Box-Folder",
+    "lastModifiedTimestamp" : 1795656823006,
+    "name" : "NetSuite FIleCabinet to Box Folder",
+    "versionCount" : 0
+  },
+  "latest" : false
+}
