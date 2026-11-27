@@ -74,21 +74,18 @@
     }, {
       "backPressureDataSizeThreshold" : "1 GB",
       "backPressureObjectThreshold" : 10000,
-      "bends" : [ {
-        "x" : 1488.0,
-        "y" : 453.0
-      } ],
+      "bends" : [ ],
       "componentType" : "CONNECTION",
       "destination" : {
         "comments" : "",
         "groupId" : "flow-contents-group",
-        "id" : "1572b67d-01a2-1000-2370-096088b2bf25",
-        "name" : "Success Subject",
+        "id" : "157438d2-01a2-1000-d1ed-5a9bd4f7ed2b",
+        "name" : "Error Subject",
         "type" : "PROCESSOR"
       },
       "flowFileExpiration" : "0 sec",
       "groupIdentifier" : "flow-contents-group",
-      "identifier" : "4adce5e8-16d4-3a3e-93c2-9f459533e593",
+      "identifier" : "5218bbb2-0695-3bff-b7da-ad452e73b927",
       "labelIndex" : 0,
       "loadBalanceCompression" : "DO_NOT_COMPRESS",
       "loadBalanceStrategy" : "DO_NOT_LOAD_BALANCE",
@@ -103,7 +100,7 @@
         "name" : "Error Summary Response",
         "type" : "OUTPUT_PORT"
       },
-      "zIndex" : 8
+      "zIndex" : 11
     }, {
       "backPressureDataSizeThreshold" : "1 GB",
       "backPressureObjectThreshold" : 10000,
@@ -112,8 +109,8 @@
       "destination" : {
         "comments" : "",
         "groupId" : "flow-contents-group",
-        "id" : "157438d2-01a2-1000-d1ed-5a9bd4f7ed2b",
-        "name" : "Error Subject",
+        "id" : "1572b67d-01a2-1000-2370-096088b2bf25",
+        "name" : "Success Subject",
         "type" : "PROCESSOR"
       },
       "flowFileExpiration" : "0 sec",
@@ -1205,1596 +1202,6 @@
         "schedulingStrategy" : "TIMER_DRIVEN",
         "style" : { },
         "type" : "org.apache.nifi.processors.attributes.UpdateAttribute",
-        "yieldDuration" : "1 sec"
-      } ],
-      "remoteProcessGroups" : [ ],
-      "scheduledState" : "ENABLED",
-      "statelessFlowTimeout" : "1 min"
-    }, {
-      "comments" : "Uploads incoming FlowFiles to Box under <parent_folder_id>/yyyy/MM/yyyy-MM-dd and emits two aggregated JSON summary responses: Success Summary Response and Error Summary Response.",
-      "componentType" : "PROCESS_GROUP",
-      "connections" : [ {
-        "backPressureDataSizeThreshold" : "1 GB",
-        "backPressureObjectThreshold" : 10000,
-        "bends" : [ ],
-        "componentType" : "CONNECTION",
-        "destination" : {
-          "comments" : "Emits 1 merged JSON array containing all successful uploads",
-          "groupId" : "151ebd0e-01a2-1000-ae03-3a595151a880",
-          "id" : "151ebd1a-01a2-1000-8054-7cad0b0b5f01",
-          "name" : "Success Summary Response",
-          "type" : "OUTPUT_PORT"
-        },
-        "flowFileExpiration" : "0 sec",
-        "groupIdentifier" : "151ebd0e-01a2-1000-ae03-3a595151a880",
-        "identifier" : "151ebd1c-01a2-1000-f818-a68092601ff7",
-        "labelIndex" : 1,
-        "loadBalanceCompression" : "DO_NOT_COMPRESS",
-        "loadBalanceStrategy" : "DO_NOT_LOAD_BALANCE",
-        "name" : "merged",
-        "partitioningAttribute" : "",
-        "prioritizers" : [ ],
-        "selectedRelationships" : [ "merged" ],
-        "source" : {
-          "comments" : "Merges all SUCCESS responses in the batch into a single JSON array.",
-          "groupId" : "151ebd0e-01a2-1000-ae03-3a595151a880",
-          "id" : "151ebd12-01a2-1000-d4d0-ded3d1beb06f",
-          "name" : "Merge Success Summary",
-          "type" : "PROCESSOR"
-        },
-        "zIndex" : 0
-      }, {
-        "backPressureDataSizeThreshold" : "1 GB",
-        "backPressureObjectThreshold" : 10000,
-        "bends" : [ ],
-        "componentType" : "CONNECTION",
-        "destination" : {
-          "comments" : "",
-          "groupId" : "151ebd0e-01a2-1000-ae03-3a595151a880",
-          "id" : "151ebd17-01a2-1000-a30c-7c0d0c28390c",
-          "name" : "Resolve Parent Folder & yyyy/MM/yyyy-MM-dd Path",
-          "type" : "PROCESSOR"
-        },
-        "flowFileExpiration" : "0 sec",
-        "groupIdentifier" : "151ebd0e-01a2-1000-ae03-3a595151a880",
-        "identifier" : "151ebd1d-01a2-1000-deb8-c1d8add8d930",
-        "labelIndex" : 1,
-        "loadBalanceCompression" : "DO_NOT_COMPRESS",
-        "loadBalanceStrategy" : "DO_NOT_LOAD_BALANCE",
-        "name" : "",
-        "partitioningAttribute" : "",
-        "prioritizers" : [ ],
-        "selectedRelationships" : [ "" ],
-        "source" : {
-          "comments" : "Receives file FlowFile from parent flow",
-          "groupId" : "151ebd0e-01a2-1000-ae03-3a595151a880",
-          "id" : "151ebd19-01a2-1000-b915-79e5d8e47dc6",
-          "name" : "Input File",
-          "type" : "INPUT_PORT"
-        },
-        "zIndex" : 0
-      }, {
-        "backPressureDataSizeThreshold" : "1 GB",
-        "backPressureObjectThreshold" : 10000,
-        "bends" : [ ],
-        "componentType" : "CONNECTION",
-        "destination" : {
-          "comments" : "",
-          "groupId" : "151ebd0e-01a2-1000-ae03-3a595151a880",
-          "id" : "151ebd18-01a2-1000-596d-b5ed8e1c1ccb",
-          "name" : "Upload File to Box (Create Year/Month/Date Folders)",
-          "type" : "PROCESSOR"
-        },
-        "flowFileExpiration" : "0 sec",
-        "groupIdentifier" : "151ebd0e-01a2-1000-ae03-3a595151a880",
-        "identifier" : "151ebd1e-01a2-1000-b66f-8724c1108145",
-        "labelIndex" : 1,
-        "loadBalanceCompression" : "DO_NOT_COMPRESS",
-        "loadBalanceStrategy" : "DO_NOT_LOAD_BALANCE",
-        "name" : "success",
-        "partitioningAttribute" : "",
-        "prioritizers" : [ ],
-        "selectedRelationships" : [ "success" ],
-        "source" : {
-          "comments" : "",
-          "groupId" : "151ebd0e-01a2-1000-ae03-3a595151a880",
-          "id" : "151ebd17-01a2-1000-a30c-7c0d0c28390c",
-          "name" : "Resolve Parent Folder & yyyy/MM/yyyy-MM-dd Path",
-          "type" : "PROCESSOR"
-        },
-        "zIndex" : 0
-      }, {
-        "backPressureDataSizeThreshold" : "1 GB",
-        "backPressureObjectThreshold" : 10000,
-        "bends" : [ ],
-        "componentType" : "CONNECTION",
-        "destination" : {
-          "comments" : "Emits 1 merged JSON array containing all failed uploads",
-          "groupId" : "151ebd0e-01a2-1000-ae03-3a595151a880",
-          "id" : "151ebd1b-01a2-1000-20ab-a29c75149ac4",
-          "name" : "Error Summary Response",
-          "type" : "OUTPUT_PORT"
-        },
-        "flowFileExpiration" : "0 sec",
-        "groupIdentifier" : "151ebd0e-01a2-1000-ae03-3a595151a880",
-        "identifier" : "151ebd1f-01a2-1000-bafe-1b857e62ab53",
-        "labelIndex" : 1,
-        "loadBalanceCompression" : "DO_NOT_COMPRESS",
-        "loadBalanceStrategy" : "DO_NOT_LOAD_BALANCE",
-        "name" : "merged",
-        "partitioningAttribute" : "",
-        "prioritizers" : [ ],
-        "selectedRelationships" : [ "merged" ],
-        "source" : {
-          "comments" : "Merges all FAILED responses in the batch into a single JSON array.",
-          "groupId" : "151ebd0e-01a2-1000-ae03-3a595151a880",
-          "id" : "151ebd10-01a2-1000-adee-81f1b2615cf8",
-          "name" : "Merge Error Summary",
-          "type" : "PROCESSOR"
-        },
-        "zIndex" : 0
-      }, {
-        "backPressureDataSizeThreshold" : "1 GB",
-        "backPressureObjectThreshold" : 10000,
-        "bends" : [ ],
-        "componentType" : "CONNECTION",
-        "destination" : {
-          "comments" : "",
-          "groupId" : "151ebd0e-01a2-1000-ae03-3a595151a880",
-          "id" : "151ebd11-01a2-1000-70d6-615853fb0f19",
-          "name" : "Build Failure JSON Response",
-          "type" : "PROCESSOR"
-        },
-        "flowFileExpiration" : "0 sec",
-        "groupIdentifier" : "151ebd0e-01a2-1000-ae03-3a595151a880",
-        "identifier" : "151ebd20-01a2-1000-290d-6a42fdb0251e",
-        "labelIndex" : 1,
-        "loadBalanceCompression" : "DO_NOT_COMPRESS",
-        "loadBalanceStrategy" : "DO_NOT_LOAD_BALANCE",
-        "name" : "success",
-        "partitioningAttribute" : "",
-        "prioritizers" : [ ],
-        "selectedRelationships" : [ "success" ],
-        "source" : {
-          "comments" : "",
-          "groupId" : "151ebd0e-01a2-1000-ae03-3a595151a880",
-          "id" : "151ebd14-01a2-1000-6296-9e2d83c6e5d0",
-          "name" : "Set Failure Attributes",
-          "type" : "PROCESSOR"
-        },
-        "zIndex" : 0
-      }, {
-        "backPressureDataSizeThreshold" : "1 GB",
-        "backPressureObjectThreshold" : 10000,
-        "bends" : [ ],
-        "componentType" : "CONNECTION",
-        "destination" : {
-          "comments" : "Merges all FAILED responses in the batch into a single JSON array.",
-          "groupId" : "151ebd0e-01a2-1000-ae03-3a595151a880",
-          "id" : "151ebd10-01a2-1000-adee-81f1b2615cf8",
-          "name" : "Merge Error Summary",
-          "type" : "PROCESSOR"
-        },
-        "flowFileExpiration" : "0 sec",
-        "groupIdentifier" : "151ebd0e-01a2-1000-ae03-3a595151a880",
-        "identifier" : "151ebd21-01a2-1000-dcc9-d764df1f19f7",
-        "labelIndex" : 1,
-        "loadBalanceCompression" : "DO_NOT_COMPRESS",
-        "loadBalanceStrategy" : "DO_NOT_LOAD_BALANCE",
-        "name" : "success",
-        "partitioningAttribute" : "",
-        "prioritizers" : [ ],
-        "selectedRelationships" : [ "success" ],
-        "source" : {
-          "comments" : "",
-          "groupId" : "151ebd0e-01a2-1000-ae03-3a595151a880",
-          "id" : "151ebd11-01a2-1000-70d6-615853fb0f19",
-          "name" : "Build Failure JSON Response",
-          "type" : "PROCESSOR"
-        },
-        "zIndex" : 0
-      }, {
-        "backPressureDataSizeThreshold" : "1 GB",
-        "backPressureObjectThreshold" : 10000,
-        "bends" : [ ],
-        "componentType" : "CONNECTION",
-        "destination" : {
-          "comments" : "",
-          "groupId" : "151ebd0e-01a2-1000-ae03-3a595151a880",
-          "id" : "151ebd14-01a2-1000-6296-9e2d83c6e5d0",
-          "name" : "Set Failure Attributes",
-          "type" : "PROCESSOR"
-        },
-        "flowFileExpiration" : "0 sec",
-        "groupIdentifier" : "151ebd0e-01a2-1000-ae03-3a595151a880",
-        "identifier" : "151ebd22-01a2-1000-a177-2edf47e9ead7",
-        "labelIndex" : 1,
-        "loadBalanceCompression" : "DO_NOT_COMPRESS",
-        "loadBalanceStrategy" : "DO_NOT_LOAD_BALANCE",
-        "name" : "failure",
-        "partitioningAttribute" : "",
-        "prioritizers" : [ ],
-        "selectedRelationships" : [ "failure" ],
-        "source" : {
-          "comments" : "",
-          "groupId" : "151ebd0e-01a2-1000-ae03-3a595151a880",
-          "id" : "151ebd13-01a2-1000-043d-9b353c8f913a",
-          "name" : "Build Success JSON Response",
-          "type" : "PROCESSOR"
-        },
-        "zIndex" : 0
-      }, {
-        "backPressureDataSizeThreshold" : "1 GB",
-        "backPressureObjectThreshold" : 10000,
-        "bends" : [ ],
-        "componentType" : "CONNECTION",
-        "destination" : {
-          "comments" : "",
-          "groupId" : "151ebd0e-01a2-1000-ae03-3a595151a880",
-          "id" : "151ebd13-01a2-1000-043d-9b353c8f913a",
-          "name" : "Build Success JSON Response",
-          "type" : "PROCESSOR"
-        },
-        "flowFileExpiration" : "0 sec",
-        "groupIdentifier" : "151ebd0e-01a2-1000-ae03-3a595151a880",
-        "identifier" : "151ebd23-01a2-1000-eb10-a5ab37592411",
-        "labelIndex" : 1,
-        "loadBalanceCompression" : "DO_NOT_COMPRESS",
-        "loadBalanceStrategy" : "DO_NOT_LOAD_BALANCE",
-        "name" : "success",
-        "partitioningAttribute" : "",
-        "prioritizers" : [ ],
-        "selectedRelationships" : [ "success" ],
-        "source" : {
-          "comments" : "",
-          "groupId" : "151ebd0e-01a2-1000-ae03-3a595151a880",
-          "id" : "151ebd16-01a2-1000-1a9a-2ff3e71fa886",
-          "name" : "Set Success Attributes",
-          "type" : "PROCESSOR"
-        },
-        "zIndex" : 0
-      }, {
-        "backPressureDataSizeThreshold" : "1 GB",
-        "backPressureObjectThreshold" : 10000,
-        "bends" : [ ],
-        "componentType" : "CONNECTION",
-        "destination" : {
-          "comments" : "Merges all SUCCESS responses in the batch into a single JSON array.",
-          "groupId" : "151ebd0e-01a2-1000-ae03-3a595151a880",
-          "id" : "151ebd12-01a2-1000-d4d0-ded3d1beb06f",
-          "name" : "Merge Success Summary",
-          "type" : "PROCESSOR"
-        },
-        "flowFileExpiration" : "0 sec",
-        "groupIdentifier" : "151ebd0e-01a2-1000-ae03-3a595151a880",
-        "identifier" : "151ebd24-01a2-1000-0fb3-087b7245523a",
-        "labelIndex" : 1,
-        "loadBalanceCompression" : "DO_NOT_COMPRESS",
-        "loadBalanceStrategy" : "DO_NOT_LOAD_BALANCE",
-        "name" : "success",
-        "partitioningAttribute" : "",
-        "prioritizers" : [ ],
-        "selectedRelationships" : [ "success" ],
-        "source" : {
-          "comments" : "",
-          "groupId" : "151ebd0e-01a2-1000-ae03-3a595151a880",
-          "id" : "151ebd13-01a2-1000-043d-9b353c8f913a",
-          "name" : "Build Success JSON Response",
-          "type" : "PROCESSOR"
-        },
-        "zIndex" : 0
-      }, {
-        "backPressureDataSizeThreshold" : "1 GB",
-        "backPressureObjectThreshold" : 10000,
-        "bends" : [ ],
-        "componentType" : "CONNECTION",
-        "destination" : {
-          "comments" : "",
-          "groupId" : "151ebd0e-01a2-1000-ae03-3a595151a880",
-          "id" : "151ebd16-01a2-1000-1a9a-2ff3e71fa886",
-          "name" : "Set Success Attributes",
-          "type" : "PROCESSOR"
-        },
-        "flowFileExpiration" : "0 sec",
-        "groupIdentifier" : "151ebd0e-01a2-1000-ae03-3a595151a880",
-        "identifier" : "151ebd25-01a2-1000-0bae-f7bb57424d28",
-        "labelIndex" : 1,
-        "loadBalanceCompression" : "DO_NOT_COMPRESS",
-        "loadBalanceStrategy" : "DO_NOT_LOAD_BALANCE",
-        "name" : "success",
-        "partitioningAttribute" : "",
-        "prioritizers" : [ ],
-        "selectedRelationships" : [ "success" ],
-        "source" : {
-          "comments" : "",
-          "groupId" : "151ebd0e-01a2-1000-ae03-3a595151a880",
-          "id" : "151ebd15-01a2-1000-7e2b-2e6a0e375688",
-          "name" : "Fetch Target Subfolder ID & File Metadata",
-          "type" : "PROCESSOR"
-        },
-        "zIndex" : 0
-      }, {
-        "backPressureDataSizeThreshold" : "1 GB",
-        "backPressureObjectThreshold" : 10000,
-        "bends" : [ ],
-        "componentType" : "CONNECTION",
-        "destination" : {
-          "comments" : "",
-          "groupId" : "151ebd0e-01a2-1000-ae03-3a595151a880",
-          "id" : "151ebd14-01a2-1000-6296-9e2d83c6e5d0",
-          "name" : "Set Failure Attributes",
-          "type" : "PROCESSOR"
-        },
-        "flowFileExpiration" : "0 sec",
-        "groupIdentifier" : "151ebd0e-01a2-1000-ae03-3a595151a880",
-        "identifier" : "151ebd26-01a2-1000-8bf2-d65766ccf91b",
-        "labelIndex" : 1,
-        "loadBalanceCompression" : "DO_NOT_COMPRESS",
-        "loadBalanceStrategy" : "DO_NOT_LOAD_BALANCE",
-        "name" : "failure / not.found",
-        "partitioningAttribute" : "",
-        "prioritizers" : [ ],
-        "selectedRelationships" : [ "failure", "not.found" ],
-        "source" : {
-          "comments" : "",
-          "groupId" : "151ebd0e-01a2-1000-ae03-3a595151a880",
-          "id" : "151ebd15-01a2-1000-7e2b-2e6a0e375688",
-          "name" : "Fetch Target Subfolder ID & File Metadata",
-          "type" : "PROCESSOR"
-        },
-        "zIndex" : 0
-      }, {
-        "backPressureDataSizeThreshold" : "1 GB",
-        "backPressureObjectThreshold" : 10000,
-        "bends" : [ ],
-        "componentType" : "CONNECTION",
-        "destination" : {
-          "comments" : "",
-          "groupId" : "151ebd0e-01a2-1000-ae03-3a595151a880",
-          "id" : "151ebd15-01a2-1000-7e2b-2e6a0e375688",
-          "name" : "Fetch Target Subfolder ID & File Metadata",
-          "type" : "PROCESSOR"
-        },
-        "flowFileExpiration" : "0 sec",
-        "groupIdentifier" : "151ebd0e-01a2-1000-ae03-3a595151a880",
-        "identifier" : "151ebd27-01a2-1000-1c31-3619517095aa",
-        "labelIndex" : 1,
-        "loadBalanceCompression" : "DO_NOT_COMPRESS",
-        "loadBalanceStrategy" : "DO_NOT_LOAD_BALANCE",
-        "name" : "success",
-        "partitioningAttribute" : "",
-        "prioritizers" : [ ],
-        "selectedRelationships" : [ "success" ],
-        "source" : {
-          "comments" : "",
-          "groupId" : "151ebd0e-01a2-1000-ae03-3a595151a880",
-          "id" : "151ebd18-01a2-1000-596d-b5ed8e1c1ccb",
-          "name" : "Upload File to Box (Create Year/Month/Date Folders)",
-          "type" : "PROCESSOR"
-        },
-        "zIndex" : 0
-      }, {
-        "backPressureDataSizeThreshold" : "1 GB",
-        "backPressureObjectThreshold" : 10000,
-        "bends" : [ ],
-        "componentType" : "CONNECTION",
-        "destination" : {
-          "comments" : "",
-          "groupId" : "151ebd0e-01a2-1000-ae03-3a595151a880",
-          "id" : "151ebd14-01a2-1000-6296-9e2d83c6e5d0",
-          "name" : "Set Failure Attributes",
-          "type" : "PROCESSOR"
-        },
-        "flowFileExpiration" : "0 sec",
-        "groupIdentifier" : "151ebd0e-01a2-1000-ae03-3a595151a880",
-        "identifier" : "151ebd28-01a2-1000-891c-b01f39f8c664",
-        "labelIndex" : 1,
-        "loadBalanceCompression" : "DO_NOT_COMPRESS",
-        "loadBalanceStrategy" : "DO_NOT_LOAD_BALANCE",
-        "name" : "failure",
-        "partitioningAttribute" : "",
-        "prioritizers" : [ ],
-        "selectedRelationships" : [ "failure" ],
-        "source" : {
-          "comments" : "",
-          "groupId" : "151ebd0e-01a2-1000-ae03-3a595151a880",
-          "id" : "151ebd18-01a2-1000-596d-b5ed8e1c1ccb",
-          "name" : "Upload File to Box (Create Year/Month/Date Folders)",
-          "type" : "PROCESSOR"
-        },
-        "zIndex" : 0
-      } ],
-      "controllerServices" : [ {
-        "bulletinLevel" : "WARN",
-        "bundle" : {
-          "artifact" : "nifi-box-services-nar",
-          "group" : "org.apache.nifi",
-          "version" : "2.12.0"
-        },
-        "comments" : "Authenticates to Box API using JWT App Config JSON",
-        "componentType" : "CONTROLLER_SERVICE",
-        "controllerServiceApis" : [ {
-          "bundle" : {
-            "artifact" : "nifi-box-services-api-nar",
-            "group" : "org.apache.nifi",
-            "version" : "2.12.0"
-          },
-          "type" : "org.apache.nifi.box.controllerservices.BoxClientService"
-        } ],
-        "groupIdentifier" : "151ebd0e-01a2-1000-ae03-3a595151a880",
-        "identifier" : "151ebd0f-01a2-1000-5373-e91f29418c3d",
-        "name" : "Box Client Service",
-        "properties" : {
-          "Account ID" : "#{box.account.id}",
-          "Connect Timeout" : "10 secs",
-          "Read Timeout" : "30 secs",
-          "App Actor" : "service-account"
-        },
-        "propertyDescriptors" : {
-          "Account ID" : {
-            "displayName" : "Account ID",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Account ID",
-            "sensitive" : false
-          },
-          "Connect Timeout" : {
-            "displayName" : "Connect Timeout",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Connect Timeout",
-            "sensitive" : false
-          },
-          "App Config File" : {
-            "displayName" : "App Config File",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "App Config File",
-            "resourceDefinition" : {
-              "cardinality" : "SINGLE",
-              "resourceTypes" : [ "FILE" ]
-            },
-            "sensitive" : false
-          },
-          "App Config JSON" : {
-            "displayName" : "App Config JSON",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "App Config JSON",
-            "sensitive" : true
-          },
-          "Read Timeout" : {
-            "displayName" : "Read Timeout",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Read Timeout",
-            "sensitive" : false
-          },
-          "App Actor" : {
-            "displayName" : "App Actor",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "App Actor",
-            "sensitive" : false
-          },
-          "Proxy Configuration Service" : {
-            "displayName" : "Proxy Configuration Service",
-            "dynamic" : false,
-            "identifiesControllerService" : true,
-            "name" : "Proxy Configuration Service",
-            "sensitive" : false
-          }
-        },
-        "scheduledState" : "DISABLED",
-        "type" : "org.apache.nifi.box.controllerservices.JsonConfigBasedBoxClientService"
-      } ],
-      "defaultBackPressureDataSizeThreshold" : "1 GB",
-      "defaultBackPressureObjectThreshold" : 10000,
-      "defaultFlowFileExpiration" : "0 sec",
-      "executionEngine" : "INHERITED",
-      "flowFileConcurrency" : "UNBOUNDED",
-      "flowFileOutboundPolicy" : "STREAM_WHEN_AVAILABLE",
-      "funnels" : [ ],
-      "groupIdentifier" : "flow-contents-group",
-      "identifier" : "151ebd0e-01a2-1000-ae03-3a595151a880",
-      "inputPorts" : [ {
-        "allowRemoteAccess" : false,
-        "comments" : "Receives file FlowFile from parent flow",
-        "componentType" : "INPUT_PORT",
-        "concurrentlySchedulableTaskCount" : 1,
-        "groupIdentifier" : "151ebd0e-01a2-1000-ae03-3a595151a880",
-        "identifier" : "151ebd19-01a2-1000-b915-79e5d8e47dc6",
-        "name" : "Input File",
-        "portFunction" : "STANDARD",
-        "position" : {
-          "x" : 540.0,
-          "y" : 40.0
-        },
-        "scheduledState" : "ENABLED",
-        "type" : "INPUT_PORT"
-      } ],
-      "labels" : [ ],
-      "maxConcurrentTasks" : 1,
-      "name" : "Upload_File_to_Box_Summary",
-      "outputPorts" : [ {
-        "allowRemoteAccess" : false,
-        "comments" : "Emits 1 merged JSON array containing all successful uploads",
-        "componentType" : "OUTPUT_PORT",
-        "concurrentlySchedulableTaskCount" : 1,
-        "groupIdentifier" : "151ebd0e-01a2-1000-ae03-3a595151a880",
-        "identifier" : "151ebd1a-01a2-1000-8054-7cad0b0b5f01",
-        "name" : "Success Summary Response",
-        "portFunction" : "STANDARD",
-        "position" : {
-          "x" : 280.0,
-          "y" : 1520.0
-        },
-        "scheduledState" : "ENABLED",
-        "type" : "OUTPUT_PORT"
-      }, {
-        "allowRemoteAccess" : false,
-        "comments" : "Emits 1 merged JSON array containing all failed uploads",
-        "componentType" : "OUTPUT_PORT",
-        "concurrentlySchedulableTaskCount" : 1,
-        "groupIdentifier" : "151ebd0e-01a2-1000-ae03-3a595151a880",
-        "identifier" : "151ebd1b-01a2-1000-20ab-a29c75149ac4",
-        "name" : "Error Summary Response",
-        "portFunction" : "STANDARD",
-        "position" : {
-          "x" : 820.0,
-          "y" : 1520.0
-        },
-        "scheduledState" : "ENABLED",
-        "type" : "OUTPUT_PORT"
-      } ],
-      "parameterContextName" : "Box Upload Subflow Parameters",
-      "position" : {
-        "x" : 1400.0,
-        "y" : -8.0
-      },
-      "processGroups" : [ ],
-      "processors" : [ {
-        "autoTerminatedRelationships" : [ "failure", "original" ],
-        "backoffMechanism" : "PENALIZE_FLOWFILE",
-        "bulletinLevel" : "WARN",
-        "bundle" : {
-          "artifact" : "nifi-standard-nar",
-          "group" : "org.apache.nifi",
-          "version" : "2.12.0"
-        },
-        "comments" : "Merges all FAILED responses in the batch into a single JSON array.",
-        "componentType" : "PROCESSOR",
-        "concurrentlySchedulableTaskCount" : 1,
-        "executionNode" : "ALL",
-        "groupIdentifier" : "151ebd0e-01a2-1000-ae03-3a595151a880",
-        "identifier" : "151ebd10-01a2-1000-adee-81f1b2615cf8",
-        "maxBackoffPeriod" : "10 mins",
-        "name" : "Merge Error Summary",
-        "penaltyDuration" : "30 sec",
-        "position" : {
-          "x" : 760.0,
-          "y" : 1300.0
-        },
-        "properties" : {
-          "Metadata Strategy" : "Do Not Merge Uncommon Metadata",
-          "Keep Path" : "false",
-          "Merge Strategy" : "Bin-Packing Algorithm",
-          "Attribute Strategy" : "Keep Only Common Attributes",
-          "FlowFile Insertion Strategy" : "Last in Bin",
-          "Compression Level" : "1",
-          "Maximum Number of Entries" : "1000",
-          "Maximum Number of Bins" : "5",
-          "Minimum Group Size" : "0 B",
-          "Tar Modified Time" : "${file.lastModifiedTime}",
-          "Delimiter Strategy" : "Text",
-          "Header" : "[",
-          "Merge Format" : "Binary Concatenation",
-          "Max Bin Age" : "30 secs",
-          "Footer" : "]",
-          "Demarcator" : ",",
-          "Minimum Number of Entries" : "1"
-        },
-        "propertyDescriptors" : {
-          "Metadata Strategy" : {
-            "displayName" : "Metadata Strategy",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Metadata Strategy",
-            "sensitive" : false
-          },
-          "Keep Path" : {
-            "displayName" : "Keep Path",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Keep Path",
-            "sensitive" : false
-          },
-          "Maximum Group Size" : {
-            "displayName" : "Maximum Group Size",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Maximum Group Size",
-            "sensitive" : false
-          },
-          "Merge Strategy" : {
-            "displayName" : "Merge Strategy",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Merge Strategy",
-            "sensitive" : false
-          },
-          "Attribute Strategy" : {
-            "displayName" : "Attribute Strategy",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Attribute Strategy",
-            "sensitive" : false
-          },
-          "FlowFile Insertion Strategy" : {
-            "displayName" : "FlowFile Insertion Strategy",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "FlowFile Insertion Strategy",
-            "sensitive" : false
-          },
-          "Compression Level" : {
-            "displayName" : "Compression Level",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Compression Level",
-            "sensitive" : false
-          },
-          "Maximum Number of Entries" : {
-            "displayName" : "Maximum Number of Entries",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Maximum Number of Entries",
-            "sensitive" : false
-          },
-          "Maximum Number of Bins" : {
-            "displayName" : "Maximum Number of Bins",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Maximum Number of Bins",
-            "sensitive" : false
-          },
-          "Minimum Group Size" : {
-            "displayName" : "Minimum Group Size",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Minimum Group Size",
-            "sensitive" : false
-          },
-          "Tar Modified Time" : {
-            "displayName" : "Tar Modified Time",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Tar Modified Time",
-            "sensitive" : false
-          },
-          "Delimiter Strategy" : {
-            "displayName" : "Delimiter Strategy",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Delimiter Strategy",
-            "sensitive" : false
-          },
-          "Header" : {
-            "displayName" : "Header",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Header",
-            "resourceDefinition" : {
-              "cardinality" : "SINGLE",
-              "resourceTypes" : [ "FILE", "TEXT" ]
-            },
-            "sensitive" : false
-          },
-          "Merge Format" : {
-            "displayName" : "Merge Format",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Merge Format",
-            "sensitive" : false
-          },
-          "Max Bin Age" : {
-            "displayName" : "Max Bin Age",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Max Bin Age",
-            "sensitive" : false
-          },
-          "Footer" : {
-            "displayName" : "Footer",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Footer",
-            "resourceDefinition" : {
-              "cardinality" : "SINGLE",
-              "resourceTypes" : [ "FILE", "TEXT" ]
-            },
-            "sensitive" : false
-          },
-          "Correlation Attribute Name" : {
-            "displayName" : "Correlation Attribute Name",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Correlation Attribute Name",
-            "sensitive" : false
-          },
-          "Demarcator" : {
-            "displayName" : "Demarcator",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Demarcator",
-            "resourceDefinition" : {
-              "cardinality" : "SINGLE",
-              "resourceTypes" : [ "FILE", "TEXT" ]
-            },
-            "sensitive" : false
-          },
-          "Bin Termination Check" : {
-            "displayName" : "Bin Termination Check",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Bin Termination Check",
-            "sensitive" : false
-          },
-          "Minimum Number of Entries" : {
-            "displayName" : "Minimum Number of Entries",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Minimum Number of Entries",
-            "sensitive" : false
-          }
-        },
-        "retriedRelationships" : [ ],
-        "retryCount" : 10,
-        "runDurationMillis" : 0,
-        "scheduledState" : "ENABLED",
-        "schedulingPeriod" : "0 sec",
-        "schedulingStrategy" : "TIMER_DRIVEN",
-        "style" : { },
-        "type" : "org.apache.nifi.processors.standard.MergeContent",
-        "yieldDuration" : "1 sec"
-      }, {
-        "autoTerminatedRelationships" : [ "failure" ],
-        "backoffMechanism" : "PENALIZE_FLOWFILE",
-        "bulletinLevel" : "WARN",
-        "bundle" : {
-          "artifact" : "nifi-standard-nar",
-          "group" : "org.apache.nifi",
-          "version" : "2.12.0"
-        },
-        "comments" : "",
-        "componentType" : "PROCESSOR",
-        "concurrentlySchedulableTaskCount" : 1,
-        "executionNode" : "ALL",
-        "groupIdentifier" : "151ebd0e-01a2-1000-ae03-3a595151a880",
-        "identifier" : "151ebd11-01a2-1000-70d6-615853fb0f19",
-        "maxBackoffPeriod" : "10 mins",
-        "name" : "Build Failure JSON Response",
-        "penaltyDuration" : "30 sec",
-        "position" : {
-          "x" : 760.0,
-          "y" : 1080.0
-        },
-        "properties" : {
-          "Replacement Value" : "{\n  \"fileName\": \"${filename:escapeJson()}\",\n  \"uploadStatus\": \"FAILED\",\n  \"folderId\": \"${box.target.folder.id:escapeJson()}\",\n  \"fileId\": \"${box.file.id:escapeJson()}\",\n  \"folderPath\": \"${box.subfolder.path:escapeJson()}\",\n  \"errorCode\": \"${error.code:escapeJson()}\",\n  \"errorMessage\": \"${error.message:escapeJson()}\"\n}",
-          "Search Value" : "(?s)(^.*$)",
-          "Evaluation Mode" : "Entire text",
-          "Line-by-Line Evaluation Mode" : "All",
-          "Character Set" : "UTF-8",
-          "Maximum Buffer Size" : "1 MB",
-          "Replacement Strategy" : "Always Replace"
-        },
-        "propertyDescriptors" : {
-          "Replacement Value" : {
-            "displayName" : "Replacement Value",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Replacement Value",
-            "sensitive" : false
-          },
-          "Search Value" : {
-            "displayName" : "Search Value",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Search Value",
-            "sensitive" : false
-          },
-          "Evaluation Mode" : {
-            "displayName" : "Evaluation Mode",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Evaluation Mode",
-            "sensitive" : false
-          },
-          "Text to Prepend" : {
-            "displayName" : "Text to Prepend",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Text to Prepend",
-            "sensitive" : false
-          },
-          "Line-by-Line Evaluation Mode" : {
-            "displayName" : "Line-by-Line Evaluation Mode",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Line-by-Line Evaluation Mode",
-            "sensitive" : false
-          },
-          "Character Set" : {
-            "displayName" : "Character Set",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Character Set",
-            "sensitive" : false
-          },
-          "Maximum Buffer Size" : {
-            "displayName" : "Maximum Buffer Size",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Maximum Buffer Size",
-            "sensitive" : false
-          },
-          "Replacement Strategy" : {
-            "displayName" : "Replacement Strategy",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Replacement Strategy",
-            "sensitive" : false
-          },
-          "Text to Append" : {
-            "displayName" : "Text to Append",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Text to Append",
-            "sensitive" : false
-          }
-        },
-        "retriedRelationships" : [ ],
-        "retryCount" : 10,
-        "runDurationMillis" : 0,
-        "scheduledState" : "ENABLED",
-        "schedulingPeriod" : "0 sec",
-        "schedulingStrategy" : "TIMER_DRIVEN",
-        "style" : { },
-        "type" : "org.apache.nifi.processors.standard.ReplaceText",
-        "yieldDuration" : "1 sec"
-      }, {
-        "autoTerminatedRelationships" : [ "failure", "original" ],
-        "backoffMechanism" : "PENALIZE_FLOWFILE",
-        "bulletinLevel" : "WARN",
-        "bundle" : {
-          "artifact" : "nifi-standard-nar",
-          "group" : "org.apache.nifi",
-          "version" : "2.12.0"
-        },
-        "comments" : "Merges all SUCCESS responses in the batch into a single JSON array.",
-        "componentType" : "PROCESSOR",
-        "concurrentlySchedulableTaskCount" : 1,
-        "executionNode" : "ALL",
-        "groupIdentifier" : "151ebd0e-01a2-1000-ae03-3a595151a880",
-        "identifier" : "151ebd12-01a2-1000-d4d0-ded3d1beb06f",
-        "maxBackoffPeriod" : "10 mins",
-        "name" : "Merge Success Summary",
-        "penaltyDuration" : "30 sec",
-        "position" : {
-          "x" : 220.0,
-          "y" : 1300.0
-        },
-        "properties" : {
-          "Metadata Strategy" : "Do Not Merge Uncommon Metadata",
-          "Keep Path" : "false",
-          "Merge Strategy" : "Bin-Packing Algorithm",
-          "Attribute Strategy" : "Keep Only Common Attributes",
-          "FlowFile Insertion Strategy" : "Last in Bin",
-          "Compression Level" : "1",
-          "Maximum Number of Entries" : "1000",
-          "Maximum Number of Bins" : "5",
-          "Minimum Group Size" : "0 B",
-          "Tar Modified Time" : "${file.lastModifiedTime}",
-          "Delimiter Strategy" : "Text",
-          "Header" : "[",
-          "Merge Format" : "Binary Concatenation",
-          "Max Bin Age" : "30 secs",
-          "Footer" : "]",
-          "Demarcator" : ",",
-          "Minimum Number of Entries" : "1"
-        },
-        "propertyDescriptors" : {
-          "Metadata Strategy" : {
-            "displayName" : "Metadata Strategy",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Metadata Strategy",
-            "sensitive" : false
-          },
-          "Keep Path" : {
-            "displayName" : "Keep Path",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Keep Path",
-            "sensitive" : false
-          },
-          "Maximum Group Size" : {
-            "displayName" : "Maximum Group Size",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Maximum Group Size",
-            "sensitive" : false
-          },
-          "Merge Strategy" : {
-            "displayName" : "Merge Strategy",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Merge Strategy",
-            "sensitive" : false
-          },
-          "Attribute Strategy" : {
-            "displayName" : "Attribute Strategy",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Attribute Strategy",
-            "sensitive" : false
-          },
-          "FlowFile Insertion Strategy" : {
-            "displayName" : "FlowFile Insertion Strategy",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "FlowFile Insertion Strategy",
-            "sensitive" : false
-          },
-          "Compression Level" : {
-            "displayName" : "Compression Level",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Compression Level",
-            "sensitive" : false
-          },
-          "Maximum Number of Entries" : {
-            "displayName" : "Maximum Number of Entries",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Maximum Number of Entries",
-            "sensitive" : false
-          },
-          "Maximum Number of Bins" : {
-            "displayName" : "Maximum Number of Bins",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Maximum Number of Bins",
-            "sensitive" : false
-          },
-          "Minimum Group Size" : {
-            "displayName" : "Minimum Group Size",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Minimum Group Size",
-            "sensitive" : false
-          },
-          "Tar Modified Time" : {
-            "displayName" : "Tar Modified Time",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Tar Modified Time",
-            "sensitive" : false
-          },
-          "Delimiter Strategy" : {
-            "displayName" : "Delimiter Strategy",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Delimiter Strategy",
-            "sensitive" : false
-          },
-          "Header" : {
-            "displayName" : "Header",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Header",
-            "resourceDefinition" : {
-              "cardinality" : "SINGLE",
-              "resourceTypes" : [ "FILE", "TEXT" ]
-            },
-            "sensitive" : false
-          },
-          "Merge Format" : {
-            "displayName" : "Merge Format",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Merge Format",
-            "sensitive" : false
-          },
-          "Max Bin Age" : {
-            "displayName" : "Max Bin Age",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Max Bin Age",
-            "sensitive" : false
-          },
-          "Footer" : {
-            "displayName" : "Footer",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Footer",
-            "resourceDefinition" : {
-              "cardinality" : "SINGLE",
-              "resourceTypes" : [ "FILE", "TEXT" ]
-            },
-            "sensitive" : false
-          },
-          "Correlation Attribute Name" : {
-            "displayName" : "Correlation Attribute Name",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Correlation Attribute Name",
-            "sensitive" : false
-          },
-          "Demarcator" : {
-            "displayName" : "Demarcator",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Demarcator",
-            "resourceDefinition" : {
-              "cardinality" : "SINGLE",
-              "resourceTypes" : [ "FILE", "TEXT" ]
-            },
-            "sensitive" : false
-          },
-          "Bin Termination Check" : {
-            "displayName" : "Bin Termination Check",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Bin Termination Check",
-            "sensitive" : false
-          },
-          "Minimum Number of Entries" : {
-            "displayName" : "Minimum Number of Entries",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Minimum Number of Entries",
-            "sensitive" : false
-          }
-        },
-        "retriedRelationships" : [ ],
-        "retryCount" : 10,
-        "runDurationMillis" : 0,
-        "scheduledState" : "ENABLED",
-        "schedulingPeriod" : "0 sec",
-        "schedulingStrategy" : "TIMER_DRIVEN",
-        "style" : { },
-        "type" : "org.apache.nifi.processors.standard.MergeContent",
-        "yieldDuration" : "1 sec"
-      }, {
-        "autoTerminatedRelationships" : [ ],
-        "backoffMechanism" : "PENALIZE_FLOWFILE",
-        "bulletinLevel" : "WARN",
-        "bundle" : {
-          "artifact" : "nifi-standard-nar",
-          "group" : "org.apache.nifi",
-          "version" : "2.12.0"
-        },
-        "comments" : "",
-        "componentType" : "PROCESSOR",
-        "concurrentlySchedulableTaskCount" : 1,
-        "executionNode" : "ALL",
-        "groupIdentifier" : "151ebd0e-01a2-1000-ae03-3a595151a880",
-        "identifier" : "151ebd13-01a2-1000-043d-9b353c8f913a",
-        "maxBackoffPeriod" : "10 mins",
-        "name" : "Build Success JSON Response",
-        "penaltyDuration" : "30 sec",
-        "position" : {
-          "x" : 220.0,
-          "y" : 1080.0
-        },
-        "properties" : {
-          "Replacement Value" : "{\n  \"fileName\": \"${filename:escapeJson()}\",\n  \"uploadStatus\": \"SUCCESS\",\n  \"folderId\": \"${box.target.folder.id:escapeJson()}\",\n  \"fileId\": \"${box.file.id:escapeJson()}\",\n  \"folderPath\": \"${path:escapeJson()}\",\n  \"fileSize\": ${box.size:isEmpty():ifElse('0', '${box.size}')}\n}",
-          "Search Value" : "(?s)(^.*$)",
-          "Evaluation Mode" : "Entire text",
-          "Line-by-Line Evaluation Mode" : "All",
-          "Character Set" : "UTF-8",
-          "Maximum Buffer Size" : "1 MB",
-          "Replacement Strategy" : "Always Replace"
-        },
-        "propertyDescriptors" : {
-          "Replacement Value" : {
-            "displayName" : "Replacement Value",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Replacement Value",
-            "sensitive" : false
-          },
-          "Search Value" : {
-            "displayName" : "Search Value",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Search Value",
-            "sensitive" : false
-          },
-          "Evaluation Mode" : {
-            "displayName" : "Evaluation Mode",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Evaluation Mode",
-            "sensitive" : false
-          },
-          "Text to Prepend" : {
-            "displayName" : "Text to Prepend",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Text to Prepend",
-            "sensitive" : false
-          },
-          "Line-by-Line Evaluation Mode" : {
-            "displayName" : "Line-by-Line Evaluation Mode",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Line-by-Line Evaluation Mode",
-            "sensitive" : false
-          },
-          "Character Set" : {
-            "displayName" : "Character Set",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Character Set",
-            "sensitive" : false
-          },
-          "Maximum Buffer Size" : {
-            "displayName" : "Maximum Buffer Size",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Maximum Buffer Size",
-            "sensitive" : false
-          },
-          "Replacement Strategy" : {
-            "displayName" : "Replacement Strategy",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Replacement Strategy",
-            "sensitive" : false
-          },
-          "Text to Append" : {
-            "displayName" : "Text to Append",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Text to Append",
-            "sensitive" : false
-          }
-        },
-        "retriedRelationships" : [ ],
-        "retryCount" : 10,
-        "runDurationMillis" : 0,
-        "scheduledState" : "ENABLED",
-        "schedulingPeriod" : "0 sec",
-        "schedulingStrategy" : "TIMER_DRIVEN",
-        "style" : { },
-        "type" : "org.apache.nifi.processors.standard.ReplaceText",
-        "yieldDuration" : "1 sec"
-      }, {
-        "autoTerminatedRelationships" : [ ],
-        "backoffMechanism" : "PENALIZE_FLOWFILE",
-        "bulletinLevel" : "WARN",
-        "bundle" : {
-          "artifact" : "nifi-update-attribute-nar",
-          "group" : "org.apache.nifi",
-          "version" : "2.12.0"
-        },
-        "comments" : "",
-        "componentType" : "PROCESSOR",
-        "concurrentlySchedulableTaskCount" : 1,
-        "executionNode" : "ALL",
-        "groupIdentifier" : "151ebd0e-01a2-1000-ae03-3a595151a880",
-        "identifier" : "151ebd14-01a2-1000-6296-9e2d83c6e5d0",
-        "maxBackoffPeriod" : "10 mins",
-        "name" : "Set Failure Attributes",
-        "penaltyDuration" : "30 sec",
-        "position" : {
-          "x" : 760.0,
-          "y" : 860.0
-        },
-        "properties" : {
-          "upload.status" : "FAILED",
-          "Store State" : "Do not store state",
-          "mime.type" : "application/json",
-          "Cache Value Lookup Cache Size" : "100",
-          "box.target.folder.id" : "${box.resolved.parent.folder.id}",
-          "box.file.id" : "${box.id}"
-        },
-        "propertyDescriptors" : {
-          "upload.status" : {
-            "displayName" : "upload.status",
-            "dynamic" : true,
-            "identifiesControllerService" : false,
-            "name" : "upload.status",
-            "sensitive" : false
-          },
-          "Delete Attributes Expression" : {
-            "displayName" : "Delete Attributes Expression",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Delete Attributes Expression",
-            "sensitive" : false
-          },
-          "Store State" : {
-            "displayName" : "Store State",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Store State",
-            "sensitive" : false
-          },
-          "mime.type" : {
-            "displayName" : "mime.type",
-            "dynamic" : true,
-            "identifiesControllerService" : false,
-            "name" : "mime.type",
-            "sensitive" : false
-          },
-          "Cache Value Lookup Cache Size" : {
-            "displayName" : "Cache Value Lookup Cache Size",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Cache Value Lookup Cache Size",
-            "sensitive" : false
-          },
-          "Stateful Variables Initial Value" : {
-            "displayName" : "Stateful Variables Initial Value",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Stateful Variables Initial Value",
-            "sensitive" : false
-          },
-          "box.target.folder.id" : {
-            "displayName" : "box.target.folder.id",
-            "dynamic" : true,
-            "identifiesControllerService" : false,
-            "name" : "box.target.folder.id",
-            "sensitive" : false
-          },
-          "box.file.id" : {
-            "displayName" : "box.file.id",
-            "dynamic" : true,
-            "identifiesControllerService" : false,
-            "name" : "box.file.id",
-            "sensitive" : false
-          }
-        },
-        "retriedRelationships" : [ ],
-        "retryCount" : 10,
-        "runDurationMillis" : 0,
-        "scheduledState" : "ENABLED",
-        "schedulingPeriod" : "0 sec",
-        "schedulingStrategy" : "TIMER_DRIVEN",
-        "style" : { },
-        "type" : "org.apache.nifi.processors.attributes.UpdateAttribute",
-        "yieldDuration" : "1 sec"
-      }, {
-        "autoTerminatedRelationships" : [ ],
-        "backoffMechanism" : "PENALIZE_FLOWFILE",
-        "bulletinLevel" : "WARN",
-        "bundle" : {
-          "artifact" : "nifi-box-nar",
-          "group" : "org.apache.nifi",
-          "version" : "2.12.0"
-        },
-        "comments" : "",
-        "componentType" : "PROCESSOR",
-        "concurrentlySchedulableTaskCount" : 1,
-        "executionNode" : "ALL",
-        "groupIdentifier" : "151ebd0e-01a2-1000-ae03-3a595151a880",
-        "identifier" : "151ebd15-01a2-1000-7e2b-2e6a0e375688",
-        "maxBackoffPeriod" : "10 mins",
-        "name" : "Fetch Target Subfolder ID & File Metadata",
-        "penaltyDuration" : "30 sec",
-        "position" : {
-          "x" : 220.0,
-          "y" : 640.0
-        },
-        "properties" : {
-          "Box Client Service" : "151ebd0f-01a2-1000-5373-e91f29418c3d",
-          "File ID" : "${box.id}"
-        },
-        "propertyDescriptors" : {
-          "Box Client Service" : {
-            "displayName" : "Box Client Service",
-            "dynamic" : false,
-            "identifiesControllerService" : true,
-            "name" : "Box Client Service",
-            "sensitive" : false
-          },
-          "File ID" : {
-            "displayName" : "File ID",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "File ID",
-            "sensitive" : false
-          }
-        },
-        "retriedRelationships" : [ ],
-        "retryCount" : 10,
-        "runDurationMillis" : 0,
-        "scheduledState" : "ENABLED",
-        "schedulingPeriod" : "0 sec",
-        "schedulingStrategy" : "TIMER_DRIVEN",
-        "style" : { },
-        "type" : "org.apache.nifi.processors.box.FetchBoxFileInfo",
-        "yieldDuration" : "1 sec"
-      }, {
-        "autoTerminatedRelationships" : [ ],
-        "backoffMechanism" : "PENALIZE_FLOWFILE",
-        "bulletinLevel" : "WARN",
-        "bundle" : {
-          "artifact" : "nifi-update-attribute-nar",
-          "group" : "org.apache.nifi",
-          "version" : "2.12.0"
-        },
-        "comments" : "",
-        "componentType" : "PROCESSOR",
-        "concurrentlySchedulableTaskCount" : 1,
-        "executionNode" : "ALL",
-        "groupIdentifier" : "151ebd0e-01a2-1000-ae03-3a595151a880",
-        "identifier" : "151ebd16-01a2-1000-1a9a-2ff3e71fa886",
-        "maxBackoffPeriod" : "10 mins",
-        "name" : "Set Success Attributes",
-        "penaltyDuration" : "30 sec",
-        "position" : {
-          "x" : 220.0,
-          "y" : 860.0
-        },
-        "properties" : {
-          "upload.status" : "SUCCESS",
-          "Store State" : "Do not store state",
-          "mime.type" : "application/json",
-          "Cache Value Lookup Cache Size" : "100",
-          "box.target.folder.id" : "${box.parent.folder.id}",
-          "box.file.id" : "${box.id}"
-        },
-        "propertyDescriptors" : {
-          "upload.status" : {
-            "displayName" : "upload.status",
-            "dynamic" : true,
-            "identifiesControllerService" : false,
-            "name" : "upload.status",
-            "sensitive" : false
-          },
-          "Delete Attributes Expression" : {
-            "displayName" : "Delete Attributes Expression",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Delete Attributes Expression",
-            "sensitive" : false
-          },
-          "Store State" : {
-            "displayName" : "Store State",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Store State",
-            "sensitive" : false
-          },
-          "mime.type" : {
-            "displayName" : "mime.type",
-            "dynamic" : true,
-            "identifiesControllerService" : false,
-            "name" : "mime.type",
-            "sensitive" : false
-          },
-          "Cache Value Lookup Cache Size" : {
-            "displayName" : "Cache Value Lookup Cache Size",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Cache Value Lookup Cache Size",
-            "sensitive" : false
-          },
-          "Stateful Variables Initial Value" : {
-            "displayName" : "Stateful Variables Initial Value",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Stateful Variables Initial Value",
-            "sensitive" : false
-          },
-          "box.target.folder.id" : {
-            "displayName" : "box.target.folder.id",
-            "dynamic" : true,
-            "identifiesControllerService" : false,
-            "name" : "box.target.folder.id",
-            "sensitive" : false
-          },
-          "box.file.id" : {
-            "displayName" : "box.file.id",
-            "dynamic" : true,
-            "identifiesControllerService" : false,
-            "name" : "box.file.id",
-            "sensitive" : false
-          }
-        },
-        "retriedRelationships" : [ ],
-        "retryCount" : 10,
-        "runDurationMillis" : 0,
-        "scheduledState" : "ENABLED",
-        "schedulingPeriod" : "0 sec",
-        "schedulingStrategy" : "TIMER_DRIVEN",
-        "style" : { },
-        "type" : "org.apache.nifi.processors.attributes.UpdateAttribute",
-        "yieldDuration" : "1 sec"
-      }, {
-        "autoTerminatedRelationships" : [ ],
-        "backoffMechanism" : "PENALIZE_FLOWFILE",
-        "bulletinLevel" : "WARN",
-        "bundle" : {
-          "artifact" : "nifi-update-attribute-nar",
-          "group" : "org.apache.nifi",
-          "version" : "2.12.0"
-        },
-        "comments" : "",
-        "componentType" : "PROCESSOR",
-        "concurrentlySchedulableTaskCount" : 1,
-        "executionNode" : "ALL",
-        "groupIdentifier" : "151ebd0e-01a2-1000-ae03-3a595151a880",
-        "identifier" : "151ebd17-01a2-1000-a30c-7c0d0c28390c",
-        "maxBackoffPeriod" : "10 mins",
-        "name" : "Resolve Parent Folder & yyyy/MM/yyyy-MM-dd Path",
-        "penaltyDuration" : "30 sec",
-        "position" : {
-          "x" : 480.0,
-          "y" : 200.0
-        },
-        "properties" : {
-          "Store State" : "Do not store state",
-          "box.resolved.date" : "${box.target.date:trim():isEmpty():ifElse('${now():format(\"yyyy-MM-dd\")}', '${box.target.date:trim()}')}",
-          "Cache Value Lookup Cache Size" : "100",
-          "box.resolved.parent.folder.id" : "${box.parent.folder.id:trim():isEmpty():ifElse(#{box.parent.folder.id}, ${box.parent.folder.id:trim()})}",
-          "box.subfolder.path" : "${box.target.date:trim():isEmpty():ifElse(${now():format('yyyy/MM/yyyy-MM-dd')}, ${box.target.date:substring(0, 4):append('/'):append(${box.target.date:substring(5, 7)}):append('/'):append(${box.target.date})})}"
-        },
-        "propertyDescriptors" : {
-          "Delete Attributes Expression" : {
-            "displayName" : "Delete Attributes Expression",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Delete Attributes Expression",
-            "sensitive" : false
-          },
-          "Store State" : {
-            "displayName" : "Store State",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Store State",
-            "sensitive" : false
-          },
-          "box.resolved.date" : {
-            "displayName" : "box.resolved.date",
-            "dynamic" : true,
-            "identifiesControllerService" : false,
-            "name" : "box.resolved.date",
-            "sensitive" : false
-          },
-          "Cache Value Lookup Cache Size" : {
-            "displayName" : "Cache Value Lookup Cache Size",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Cache Value Lookup Cache Size",
-            "sensitive" : false
-          },
-          "Stateful Variables Initial Value" : {
-            "displayName" : "Stateful Variables Initial Value",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Stateful Variables Initial Value",
-            "sensitive" : false
-          },
-          "box.resolved.parent.folder.id" : {
-            "displayName" : "box.resolved.parent.folder.id",
-            "dynamic" : true,
-            "identifiesControllerService" : false,
-            "name" : "box.resolved.parent.folder.id",
-            "sensitive" : false
-          },
-          "box.subfolder.path" : {
-            "displayName" : "box.subfolder.path",
-            "dynamic" : true,
-            "identifiesControllerService" : false,
-            "name" : "box.subfolder.path",
-            "sensitive" : false
-          }
-        },
-        "retriedRelationships" : [ ],
-        "retryCount" : 10,
-        "runDurationMillis" : 0,
-        "scheduledState" : "ENABLED",
-        "schedulingPeriod" : "0 sec",
-        "schedulingStrategy" : "TIMER_DRIVEN",
-        "style" : { },
-        "type" : "org.apache.nifi.processors.attributes.UpdateAttribute",
-        "yieldDuration" : "1 sec"
-      }, {
-        "autoTerminatedRelationships" : [ ],
-        "backoffMechanism" : "PENALIZE_FLOWFILE",
-        "bulletinLevel" : "WARN",
-        "bundle" : {
-          "artifact" : "nifi-box-nar",
-          "group" : "org.apache.nifi",
-          "version" : "2.12.0"
-        },
-        "comments" : "",
-        "componentType" : "PROCESSOR",
-        "concurrentlySchedulableTaskCount" : 1,
-        "executionNode" : "ALL",
-        "groupIdentifier" : "151ebd0e-01a2-1000-ae03-3a595151a880",
-        "identifier" : "151ebd18-01a2-1000-596d-b5ed8e1c1ccb",
-        "maxBackoffPeriod" : "10 mins",
-        "name" : "Upload File to Box (Create Year/Month/Date Folders)",
-        "penaltyDuration" : "30 sec",
-        "position" : {
-          "x" : 480.0,
-          "y" : 424.0
-        },
-        "properties" : {
-          "Subfolder Name" : "${box.subfolder.path}",
-          "Chunked Upload Threshold" : "20 MB",
-          "Create Subfolder" : "true",
-          "Box Client Service" : "151ebd0f-01a2-1000-5373-e91f29418c3d",
-          "Filename" : "${filename}",
-          "Folder ID" : "${box.resolved.parent.folder.id}",
-          "Conflict Resolution Strategy" : "#{box.conflict.strategy}"
-        },
-        "propertyDescriptors" : {
-          "Subfolder Name" : {
-            "displayName" : "Subfolder Name",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Subfolder Name",
-            "sensitive" : false
-          },
-          "Chunked Upload Threshold" : {
-            "displayName" : "Chunked Upload Threshold",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Chunked Upload Threshold",
-            "sensitive" : false
-          },
-          "Create Subfolder" : {
-            "displayName" : "Create Subfolder",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Create Subfolder",
-            "sensitive" : false
-          },
-          "Box Client Service" : {
-            "displayName" : "Box Client Service",
-            "dynamic" : false,
-            "identifiesControllerService" : true,
-            "name" : "Box Client Service",
-            "sensitive" : false
-          },
-          "Filename" : {
-            "displayName" : "Filename",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Filename",
-            "sensitive" : false
-          },
-          "Folder ID" : {
-            "displayName" : "Folder ID",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Folder ID",
-            "sensitive" : false
-          },
-          "Conflict Resolution Strategy" : {
-            "displayName" : "Conflict Resolution Strategy",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Conflict Resolution Strategy",
-            "sensitive" : false
-          }
-        },
-        "retriedRelationships" : [ ],
-        "retryCount" : 10,
-        "runDurationMillis" : 0,
-        "scheduledState" : "ENABLED",
-        "schedulingPeriod" : "0 sec",
-        "schedulingStrategy" : "TIMER_DRIVEN",
-        "style" : { },
-        "type" : "org.apache.nifi.processors.box.PutBoxFile",
         "yieldDuration" : "1 sec"
       } ],
       "remoteProcessGroups" : [ ],
@@ -4383,6 +2790,66 @@
         "bends" : [ ],
         "componentType" : "CONNECTION",
         "destination" : {
+          "comments" : "",
+          "groupId" : "f3b57707-0f76-3fb8-985a-24caa8df9418",
+          "id" : "787c97de-eacc-3f80-a924-6882a6b01cb7",
+          "name" : "LogAttribute",
+          "type" : "PROCESSOR"
+        },
+        "flowFileExpiration" : "0 sec",
+        "groupIdentifier" : "f3b57707-0f76-3fb8-985a-24caa8df9418",
+        "identifier" : "3aa55516-c08b-3430-9d51-f627f2d4747e",
+        "labelIndex" : 0,
+        "loadBalanceCompression" : "DO_NOT_COMPRESS",
+        "loadBalanceStrategy" : "DO_NOT_LOAD_BALANCE",
+        "name" : "",
+        "partitioningAttribute" : "",
+        "prioritizers" : [ ],
+        "selectedRelationships" : [ "Failure", "No Retry", "Retry" ],
+        "source" : {
+          "comments" : "Uploads file to NetSuite File Cabinet via REST Document API.",
+          "groupId" : "f3b57707-0f76-3fb8-985a-24caa8df9418",
+          "id" : "a3f10000-0000-4000-8000-000000000023",
+          "name" : "Upload File to NetSuite",
+          "type" : "PROCESSOR"
+        },
+        "zIndex" : 2
+      }, {
+        "backPressureDataSizeThreshold" : "1 GB",
+        "backPressureObjectThreshold" : 10000,
+        "bends" : [ ],
+        "componentType" : "CONNECTION",
+        "destination" : {
+          "comments" : "Formats per-file FAILED execution status JSON.",
+          "groupId" : "f3b57707-0f76-3fb8-985a-24caa8df9418",
+          "id" : "a3f10000-0000-4000-8000-000000000025",
+          "name" : "Build Failure Status JSON",
+          "type" : "PROCESSOR"
+        },
+        "flowFileExpiration" : "0 sec",
+        "groupIdentifier" : "f3b57707-0f76-3fb8-985a-24caa8df9418",
+        "identifier" : "8503aa4a-683e-3690-90e3-2c4276ca28fe",
+        "labelIndex" : 0,
+        "loadBalanceCompression" : "DO_NOT_COMPRESS",
+        "loadBalanceStrategy" : "DO_NOT_LOAD_BALANCE",
+        "name" : "",
+        "partitioningAttribute" : "",
+        "prioritizers" : [ ],
+        "selectedRelationships" : [ "success" ],
+        "source" : {
+          "comments" : "",
+          "groupId" : "f3b57707-0f76-3fb8-985a-24caa8df9418",
+          "id" : "787c97de-eacc-3f80-a924-6882a6b01cb7",
+          "name" : "LogAttribute",
+          "type" : "PROCESSOR"
+        },
+        "zIndex" : 3
+      }, {
+        "backPressureDataSizeThreshold" : "1 GB",
+        "backPressureObjectThreshold" : 10000,
+        "bends" : [ ],
+        "componentType" : "CONNECTION",
+        "destination" : {
           "comments" : "Resolves target NetSuite folder ID and sets TBA signing attributes for POST /document/v1/file.",
           "groupId" : "f3b57707-0f76-3fb8-985a-24caa8df9418",
           "id" : "a3f10000-0000-4000-8000-000000000020",
@@ -4405,66 +2872,6 @@
           "id" : "a3f10000-0000-4000-8000-000000000010",
           "name" : "Input File",
           "type" : "INPUT_PORT"
-        },
-        "zIndex" : 0
-      }, {
-        "backPressureDataSizeThreshold" : "1 GB",
-        "backPressureObjectThreshold" : 10000,
-        "bends" : [ ],
-        "componentType" : "CONNECTION",
-        "destination" : {
-          "comments" : "Connect to NetSuite TBA Auth Service -> Auth Request.",
-          "groupId" : "f3b57707-0f76-3fb8-985a-24caa8df9418",
-          "id" : "a3f10000-0000-4000-8000-000000000012",
-          "name" : "To NS Auth",
-          "type" : "OUTPUT_PORT"
-        },
-        "flowFileExpiration" : "0 sec",
-        "groupIdentifier" : "f3b57707-0f76-3fb8-985a-24caa8df9418",
-        "identifier" : "a3f10000-0000-4000-8000-000000000105",
-        "labelIndex" : 1,
-        "loadBalanceCompression" : "DO_NOT_COMPRESS",
-        "loadBalanceStrategy" : "DO_NOT_LOAD_BALANCE",
-        "name" : "success",
-        "partitioningAttribute" : "",
-        "prioritizers" : [ ],
-        "selectedRelationships" : [ "success" ],
-        "source" : {
-          "comments" : "Wraps Base64 content ($1) into NetSuite File Cabinet JSON payload.",
-          "groupId" : "f3b57707-0f76-3fb8-985a-24caa8df9418",
-          "id" : "a3f10000-0000-4000-8000-000000000022",
-          "name" : "Build NetSuite Upload JSON",
-          "type" : "PROCESSOR"
-        },
-        "zIndex" : 0
-      }, {
-        "backPressureDataSizeThreshold" : "1 GB",
-        "backPressureObjectThreshold" : 10000,
-        "bends" : [ ],
-        "componentType" : "CONNECTION",
-        "destination" : {
-          "comments" : "Formats per-file FAILED execution status JSON.",
-          "groupId" : "f3b57707-0f76-3fb8-985a-24caa8df9418",
-          "id" : "a3f10000-0000-4000-8000-000000000025",
-          "name" : "Build Failure Status JSON",
-          "type" : "PROCESSOR"
-        },
-        "flowFileExpiration" : "0 sec",
-        "groupIdentifier" : "f3b57707-0f76-3fb8-985a-24caa8df9418",
-        "identifier" : "a3f10000-0000-4000-8000-000000000106",
-        "labelIndex" : 1,
-        "loadBalanceCompression" : "DO_NOT_COMPRESS",
-        "loadBalanceStrategy" : "DO_NOT_LOAD_BALANCE",
-        "name" : "failure",
-        "partitioningAttribute" : "",
-        "prioritizers" : [ ],
-        "selectedRelationships" : [ "failure" ],
-        "source" : {
-          "comments" : "Wraps Base64 content ($1) into NetSuite File Cabinet JSON payload.",
-          "groupId" : "f3b57707-0f76-3fb8-985a-24caa8df9418",
-          "id" : "a3f10000-0000-4000-8000-000000000022",
-          "name" : "Build NetSuite Upload JSON",
-          "type" : "PROCESSOR"
         },
         "zIndex" : 0
       }, {
@@ -4533,36 +2940,6 @@
         "bends" : [ ],
         "componentType" : "CONNECTION",
         "destination" : {
-          "comments" : "Formats per-file FAILED execution status JSON.",
-          "groupId" : "f3b57707-0f76-3fb8-985a-24caa8df9418",
-          "id" : "a3f10000-0000-4000-8000-000000000025",
-          "name" : "Build Failure Status JSON",
-          "type" : "PROCESSOR"
-        },
-        "flowFileExpiration" : "0 sec",
-        "groupIdentifier" : "f3b57707-0f76-3fb8-985a-24caa8df9418",
-        "identifier" : "a3f10000-0000-4000-8000-000000000109",
-        "labelIndex" : 1,
-        "loadBalanceCompression" : "DO_NOT_COMPRESS",
-        "loadBalanceStrategy" : "DO_NOT_LOAD_BALANCE",
-        "name" : "upload failed",
-        "partitioningAttribute" : "",
-        "prioritizers" : [ ],
-        "selectedRelationships" : [ "Failure", "No Retry", "Retry" ],
-        "source" : {
-          "comments" : "Uploads file to NetSuite File Cabinet via REST Document API.",
-          "groupId" : "f3b57707-0f76-3fb8-985a-24caa8df9418",
-          "id" : "a3f10000-0000-4000-8000-000000000023",
-          "name" : "Upload File to NetSuite",
-          "type" : "PROCESSOR"
-        },
-        "zIndex" : 0
-      }, {
-        "backPressureDataSizeThreshold" : "1 GB",
-        "backPressureObjectThreshold" : 10000,
-        "bends" : [ ],
-        "componentType" : "CONNECTION",
-        "destination" : {
           "comments" : "Merges all SUCCESS upload statuses into a single JSON array.",
           "groupId" : "f3b57707-0f76-3fb8-985a-24caa8df9418",
           "id" : "a3f10000-0000-4000-8000-000000000026",
@@ -4593,10 +2970,10 @@
         "bends" : [ ],
         "componentType" : "CONNECTION",
         "destination" : {
-          "comments" : "Formats per-file FAILED execution status JSON.",
+          "comments" : "Merges all FAILED upload statuses into a single JSON array.",
           "groupId" : "f3b57707-0f76-3fb8-985a-24caa8df9418",
-          "id" : "a3f10000-0000-4000-8000-000000000025",
-          "name" : "Build Failure Status JSON",
+          "id" : "a3f10000-0000-4000-8000-000000000027",
+          "name" : "Merge Error Summary",
           "type" : "PROCESSOR"
         },
         "flowFileExpiration" : "0 sec",
@@ -4745,15 +3122,7 @@
       "executionEngine" : "INHERITED",
       "flowFileConcurrency" : "UNBOUNDED",
       "flowFileOutboundPolicy" : "STREAM_WHEN_AVAILABLE",
-      "funnels" : [ {
-        "componentType" : "FUNNEL",
-        "groupIdentifier" : "f3b57707-0f76-3fb8-985a-24caa8df9418",
-        "identifier" : "1405b9a5-67d0-3bfa-9014-25875c8f9798",
-        "position" : {
-          "x" : -136.0,
-          "y" : 448.0
-        }
-      } ],
+      "funnels" : [ ],
       "groupIdentifier" : "flow-contents-group",
       "identifier" : "f3b57707-0f76-3fb8-985a-24caa8df9418",
       "inputPorts" : [ {
@@ -4830,8 +3199,8 @@
         "name" : "Error Summary Response",
         "portFunction" : "STANDARD",
         "position" : {
-          "x" : 1180.0,
-          "y" : 960.0
+          "x" : 1624.0,
+          "y" : 1072.0
         },
         "scheduledState" : "ENABLED",
         "type" : "OUTPUT_PORT"
@@ -4843,6 +3212,118 @@
       },
       "processGroups" : [ ],
       "processors" : [ {
+        "autoTerminatedRelationships" : [ ],
+        "backoffMechanism" : "PENALIZE_FLOWFILE",
+        "bulletinLevel" : "WARN",
+        "bundle" : {
+          "artifact" : "nifi-standard-nar",
+          "group" : "org.apache.nifi",
+          "version" : "2.12.0"
+        },
+        "comments" : "",
+        "componentType" : "PROCESSOR",
+        "concurrentlySchedulableTaskCount" : 1,
+        "executionNode" : "ALL",
+        "groupIdentifier" : "f3b57707-0f76-3fb8-985a-24caa8df9418",
+        "identifier" : "787c97de-eacc-3f80-a924-6882a6b01cb7",
+        "maxBackoffPeriod" : "10 mins",
+        "name" : "LogAttribute",
+        "penaltyDuration" : "30 sec",
+        "position" : {
+          "x" : 1536.0,
+          "y" : 344.0
+        },
+        "properties" : {
+          "Log FlowFile Properties" : "true",
+          "Log Level" : "error",
+          "Attributes to Log" : "filename,uuid,error.step,error.reason,invokehttp.status.code,invokehttp.status.message,netsuite.response.body",
+          "Output Format" : "Line per Attribute",
+          "Log Payload" : "true",
+          "Character Set" : "UTF-8",
+          "Attributes to Log Regular Expression" : ".*"
+        },
+        "propertyDescriptors" : {
+          "Log FlowFile Properties" : {
+            "displayName" : "Log FlowFile Properties",
+            "dynamic" : false,
+            "identifiesControllerService" : false,
+            "name" : "Log FlowFile Properties",
+            "sensitive" : false
+          },
+          "Log Level" : {
+            "displayName" : "Log Level",
+            "dynamic" : false,
+            "identifiesControllerService" : false,
+            "name" : "Log Level",
+            "sensitive" : false
+          },
+          "Attributes to Ignore" : {
+            "displayName" : "Attributes to Ignore",
+            "dynamic" : false,
+            "identifiesControllerService" : false,
+            "name" : "Attributes to Ignore",
+            "sensitive" : false
+          },
+          "Attributes to Log" : {
+            "displayName" : "Attributes to Log",
+            "dynamic" : false,
+            "identifiesControllerService" : false,
+            "name" : "Attributes to Log",
+            "sensitive" : false
+          },
+          "Attributes to Ignore Regular Expression" : {
+            "displayName" : "Attributes to Ignore Regular Expression",
+            "dynamic" : false,
+            "identifiesControllerService" : false,
+            "name" : "Attributes to Ignore Regular Expression",
+            "sensitive" : false
+          },
+          "Output Format" : {
+            "displayName" : "Output Format",
+            "dynamic" : false,
+            "identifiesControllerService" : false,
+            "name" : "Output Format",
+            "sensitive" : false
+          },
+          "Log Payload" : {
+            "displayName" : "Log Payload",
+            "dynamic" : false,
+            "identifiesControllerService" : false,
+            "name" : "Log Payload",
+            "sensitive" : false
+          },
+          "Log Prefix" : {
+            "displayName" : "Log Prefix",
+            "dynamic" : false,
+            "identifiesControllerService" : false,
+            "name" : "Log Prefix",
+            "sensitive" : false
+          },
+          "Character Set" : {
+            "displayName" : "Character Set",
+            "dynamic" : false,
+            "identifiesControllerService" : false,
+            "name" : "Character Set",
+            "sensitive" : false
+          },
+          "Attributes to Log Regular Expression" : {
+            "displayName" : "Attributes to Log Regular Expression",
+            "dynamic" : false,
+            "identifiesControllerService" : false,
+            "name" : "Attributes to Log Regular Expression",
+            "sensitive" : false
+          }
+        },
+        "retriedRelationships" : [ ],
+        "retryCount" : 10,
+        "runDurationMillis" : 25,
+        "scheduledState" : "ENABLED",
+        "schedulingPeriod" : "0 sec",
+        "schedulingStrategy" : "TIMER_DRIVEN",
+        "style" : { },
+        "type" : "org.apache.nifi.processors.standard.LogAttribute",
+        "yieldDuration" : "1 sec"
+      }, {
         "autoTerminatedRelationships" : [ ],
         "backoffMechanism" : "PENALIZE_FLOWFILE",
         "bulletinLevel" : "WARN",
@@ -4940,111 +3421,6 @@
         "type" : "org.apache.nifi.processors.attributes.UpdateAttribute",
         "yieldDuration" : "1 sec"
       }, {
-        "autoTerminatedRelationships" : [ ],
-        "backoffMechanism" : "PENALIZE_FLOWFILE",
-        "bulletinLevel" : "WARN",
-        "bundle" : {
-          "artifact" : "nifi-standard-nar",
-          "group" : "org.apache.nifi",
-          "version" : "2.12.0"
-        },
-        "comments" : "Wraps Base64 content ($1) into NetSuite File Cabinet JSON payload.",
-        "componentType" : "PROCESSOR",
-        "concurrentlySchedulableTaskCount" : 1,
-        "executionNode" : "ALL",
-        "groupIdentifier" : "f3b57707-0f76-3fb8-985a-24caa8df9418",
-        "identifier" : "a3f10000-0000-4000-8000-000000000022",
-        "maxBackoffPeriod" : "10 mins",
-        "name" : "Build NetSuite Upload JSON",
-        "penaltyDuration" : "30 sec",
-        "position" : {
-          "x" : -264.0,
-          "y" : 632.0
-        },
-        "properties" : {
-          "Replacement Value" : "{\"name\": \"${filename:escapeJson()}\", \"folder\": {\"id\": \"${ns.target.folder.id}\"}, \"content\": \"$1\"}",
-          "Search Value" : "(?s)(^.*$)",
-          "Evaluation Mode" : "Entire text",
-          "Line-by-Line Evaluation Mode" : "All",
-          "Character Set" : "UTF-8",
-          "Maximum Buffer Size" : "10 MB",
-          "Replacement Strategy" : "Regex Replace"
-        },
-        "propertyDescriptors" : {
-          "Replacement Value" : {
-            "displayName" : "Replacement Value",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Replacement Value",
-            "sensitive" : false
-          },
-          "Search Value" : {
-            "displayName" : "Search Value",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Search Value",
-            "sensitive" : false
-          },
-          "Evaluation Mode" : {
-            "displayName" : "Evaluation Mode",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Evaluation Mode",
-            "sensitive" : false
-          },
-          "Text to Prepend" : {
-            "displayName" : "Text to Prepend",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Text to Prepend",
-            "sensitive" : false
-          },
-          "Line-by-Line Evaluation Mode" : {
-            "displayName" : "Line-by-Line Evaluation Mode",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Line-by-Line Evaluation Mode",
-            "sensitive" : false
-          },
-          "Character Set" : {
-            "displayName" : "Character Set",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Character Set",
-            "sensitive" : false
-          },
-          "Maximum Buffer Size" : {
-            "displayName" : "Maximum Buffer Size",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Maximum Buffer Size",
-            "sensitive" : false
-          },
-          "Replacement Strategy" : {
-            "displayName" : "Replacement Strategy",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Replacement Strategy",
-            "sensitive" : false
-          },
-          "Text to Append" : {
-            "displayName" : "Text to Append",
-            "dynamic" : false,
-            "identifiesControllerService" : false,
-            "name" : "Text to Append",
-            "sensitive" : false
-          }
-        },
-        "retriedRelationships" : [ ],
-        "retryCount" : 10,
-        "runDurationMillis" : 0,
-        "scheduledState" : "ENABLED",
-        "schedulingPeriod" : "0 sec",
-        "schedulingStrategy" : "TIMER_DRIVEN",
-        "style" : { },
-        "type" : "org.apache.nifi.processors.standard.ReplaceText",
-        "yieldDuration" : "1 sec"
-      }, {
         "autoTerminatedRelationships" : [ "Original" ],
         "backoffMechanism" : "PENALIZE_FLOWFILE",
         "bulletinLevel" : "WARN",
@@ -5063,7 +3439,7 @@
         "name" : "Upload File to NetSuite",
         "penaltyDuration" : "30 sec",
         "position" : {
-          "x" : 860.0,
+          "x" : 864.0,
           "y" : 240.0
         },
         "properties" : {
@@ -5498,8 +3874,8 @@
         "name" : "Build Failure Status JSON",
         "penaltyDuration" : "30 sec",
         "position" : {
-          "x" : 1120.0,
-          "y" : 500.0
+          "x" : 1552.0,
+          "y" : 592.0
         },
         "properties" : {
           "Replacement Value" : "{\n  \"fileName\": \"${filename:escapeJson()}\",\n  \"folderId\": \"${ns.target.folder.id:escapeJson()}\",\n  \"uploadStatus\": \"FAILED\",\n  \"httpStatus\": \"${invokehttp.status.code:escapeJson()}\",\n  \"errorMessage\": \"${invokehttp.status.message:escapeJson()} ${invokehttp.java.exception.message:escapeJson()}\",\n  \"timestamp\": \"${now():format(\"yyyy-MM-dd'T'HH:mm:ss'Z'\", \"GMT\")}\"\n}",
@@ -5807,8 +4183,8 @@
         "name" : "Merge Error Summary",
         "penaltyDuration" : "30 sec",
         "position" : {
-          "x" : 1120.0,
-          "y" : 740.0
+          "x" : 1560.0,
+          "y" : 808.0
         },
         "properties" : {
           "Metadata Strategy" : "Do Not Merge Uncommon Metadata",
@@ -6170,7 +4546,7 @@
     "NetSuite Auth Parameters" : {
       "componentType" : "PARAMETER_CONTEXT",
       "description" : "Shared NetSuite TBA credentials reused across File Cabinet and Employee Query flows.",
-      "inheritedParameterContexts" : [ ],
+      "inheritedParameterContexts" : [ "SFTP Shared Parameters" ],
       "name" : "NetSuite Auth Parameters",
       "parameters" : [ {
         "description" : "OAuth realm (upper case, underscore, e.g. 1264332_SB3)",
@@ -6204,6 +4580,29 @@
         "name" : "ns.token.secret",
         "provided" : false,
         "sensitive" : true
+      }, {
+        "description" : "SFTP password (set after upload)",
+        "name" : "sftp.password",
+        "provided" : false,
+        "sensitive" : true
+      }, {
+        "description" : "Remote SFTP directory to download from",
+        "name" : "sftp.remote.input.path",
+        "provided" : false,
+        "sensitive" : false,
+        "value" : "/"
+      }, {
+        "description" : "Default remote SFTP directory to upload to",
+        "name" : "sftp.remote.output.path",
+        "provided" : false,
+        "sensitive" : false,
+        "value" : "/"
+      }, {
+        "description" : "SFTP username",
+        "name" : "sftp.username",
+        "provided" : false,
+        "sensitive" : false,
+        "value" : "e31bc147a56049a280b9630f636160ae"
       } ]
     },
     "SFTP Shared Parameters" : {
@@ -6269,7 +4668,7 @@
         "name" : "sftp.remote.output.path",
         "provided" : false,
         "sensitive" : false,
-        "value" : "/outbound"
+        "value" : "/"
       }, {
         "description" : "true or false",
         "name" : "sftp.strict.host.key.checking",
@@ -6281,37 +4680,7 @@
         "name" : "sftp.username",
         "provided" : false,
         "sensitive" : false,
-        "value" : "00e3f63ce1dc49f2aab754d58caa53b5"
-      } ]
-    },
-    "Box Upload Subflow Parameters" : {
-      "componentType" : "PARAMETER_CONTEXT",
-      "description" : "Environment-specific Box credentials and default upload settings",
-      "inheritedParameterContexts" : [ ],
-      "name" : "Box Upload Subflow Parameters",
-      "parameters" : [ {
-        "description" : "Box Enterprise User ID",
-        "name" : "box.account.id",
-        "provided" : false,
-        "sensitive" : false,
-        "value" : "REPLACE_WITH_BOX_USER_ID"
-      }, {
-        "description" : "Box JWT App config JSON",
-        "name" : "box.app.config.json",
-        "provided" : false,
-        "sensitive" : true
-      }, {
-        "description" : "replace, ignore, or fail",
-        "name" : "box.conflict.strategy",
-        "provided" : false,
-        "sensitive" : false,
-        "value" : "replace"
-      }, {
-        "description" : "Default parent Box folder ID",
-        "name" : "box.parent.folder.id",
-        "provided" : false,
-        "sensitive" : false,
-        "value" : "440869108123"
+        "value" : "e31bc147a56049a280b9630f636160ae"
       } ]
     },
     "NetSuite File Cabinet Upload Parameters" : {
@@ -6380,6 +4749,6 @@
   "snapshotMetadata" : {
     "author" : "admin",
     "flowIdentifier" : "SFTP-to-NetSuite-FIleCabinet",
-    "timestamp" : 1795656801117
+    "timestamp" : 1795813575172
   }
 }
